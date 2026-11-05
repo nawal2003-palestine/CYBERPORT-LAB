@@ -12,7 +12,7 @@ A fully hands-on cybersecurity research lab inspired by **Tanger Med** — Afric
 
 **[cyberport-naoual.netlify.app](https://cyberport-naoual.netlify.app/)** — full interactive site with all 4 simulations, SIEM live feed, and Blue Team defense summary.
 
-📄 Full PDF report included in `/docs`.
+📄 Full PDF report included in `/report`.
 
 ---
 
@@ -93,7 +93,7 @@ smartport-cyberlab/
 ├── sim4_lateral_movement/   → Privilege escalation, backdoors, forensics commands
 ├── defense/                 → SIEM rules, recommendations
 ├── wordlists/                → OSINT wordlist used for Sim 2
-├── docs/                      → Full PDF report
+├── report/                      → Full PDF report
 └── README.md
 ```
 
