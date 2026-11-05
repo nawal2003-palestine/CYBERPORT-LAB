@@ -1,0 +1,28 @@
+# /etc/fail2ban/jail.local — Progressive ban configuration
+# Smart Port Cybersecurity Lab — Tanger Med
+# Fail2ban v1.1.0 (installed from source — v1.0.2 incompatible with Python 3.12,
+# asynchat module was permanently removed)
+
+[DEFAULT]
+bantime.increment = true
+bantime.rndtime   = 30
+
+[sshd]
+enabled             = true
+port                = ssh
+filter              = sshd
+logpath             = /var/log/auth.log
+maxretry            = 3
+findtime            = 60
+bantime             = 60
+bantime.multiplier  = 2
+bantime.maxtime     = 86400
+action              = iptables[name=SSH, port=ssh, protocol=tcp]
+
+# Installation (if default package is incompatible with Python 3.12):
+#   sudo apt remove fail2ban -y
+#   cd /tmp && wget https://github.com/fail2ban/fail2ban/archive/refs/tags/1.1.0.tar.gz
+#   tar -xzf 1.1.0.tar.gz && cd fail2ban-1.1.0
+#   sudo python3 setup.py install
+#   sudo cp build/fail2ban.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl start fail2ban

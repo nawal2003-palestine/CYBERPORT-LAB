@@ -1,0 +1,33 @@
+# tangermed_wordlist.txt — OSINT thematic wordlist
+# Smart Port Cybersecurity Lab — Tanger Med
+# Built from public data: port website, LinkedIn profiles, maritime terminology
+#
+# The correct password appeared at RANK #4 — vs rank #2,847,563 in rockyou.txt
+# Proof that contextual OSINT beats raw wordlist volume.
+
+tangermed2023
+portadmin
+scada2024
+tangermed2024
+TangerMed@2026
+port_admin
+crane_op_01
+Morocco@port
+container123
+Tanger2026!
+portuser123
+admin_scada
+password
+maersk_op
+tanger123
+Tanger2024
+123456
+admin
+scada_admin
+logistix2024
+terminal_ops
+maritime2026
+crane_access
+portnet2024
+tmsa_admin
+apmterminal
